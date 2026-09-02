@@ -12,11 +12,10 @@ $navActive = $navActive ?? null;
 <header class="header" id="top">
     <div class="container header__inner">
         <a href="/" class="logo" aria-label="<?php echo e($siteName); ?> — на главную">
-            <svg class="logo__mark" width="40" height="40" viewBox="0 0 40 40" fill="none" aria-hidden="true">
-                <rect width="40" height="40" rx="10" fill="var(--accent)"/>
-                <path d="M6 15h13v11H6zM19 18h9l5 4v4h-14z" fill="none" stroke="#fff" stroke-width="2" stroke-linejoin="round"/>
-                <circle cx="12" cy="28" r="2.6" fill="#fff"/>
-                <circle cx="27" cy="28" r="2.6" fill="#fff"/>
+            <svg class="logo__mark" width="42" height="42" viewBox="0 0 42 42" fill="none" aria-hidden="true">
+                <rect width="42" height="42" rx="11" fill="var(--accent)"/>
+                <path d="M12 13l6.5 8-6.5 8" fill="none" stroke="#fff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M21 13l6.5 8-6.5 8" fill="none" stroke="#fff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" opacity=".5"/>
             </svg>
             <span class="logo__text">Express<span>Logist</span></span>
         </a>

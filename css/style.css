@@ -18,6 +18,13 @@
     --line:        #E2E7EE;   /* границы */
     --error:       #D93025;
 
+    /* Алиасы токенов — используются в блоках документов, реквизитов и notice.
+       Раньше были не объявлены → фон становился прозрачным, а текст сливался. */
+    --surface:     #FFFFFF;   /* = paper */
+    --surface-2:   #F3F5F8;   /* = mist  */
+    --muted:       #5B6B82;   /* = steel */
+    --border:      #E2E7EE;   /* = line  */
+
     --radius: 14px;
     --radius-sm: 10px;
     --shadow: 0 18px 48px rgba(11, 31, 58, 0.12);
@@ -310,7 +317,14 @@ h1, h2, h3, h4 { font-family: var(--font-head); font-weight: 800; line-height: 1
 
 /* ---------- Контент-страницы: layout с сайдбаром ---------- */
 .layout { display: grid; grid-template-columns: 260px 1fr; gap: 48px; align-items: start; }
+/* Часть страниц (документы, оферта, политика) обёрнута в .layout__main + .layout__aside.
+   Раньше эти обёртки не имели правил, из-за чего контент попадал в узкую колонку 260px
+   и всё «схлопывалось». Здесь: контент — широкая колонка слева, сайдбар — 300px справа. */
+.layout:has(.layout__main) { grid-template-columns: minmax(0, 1fr) 300px; }
+.layout__main { min-width: 0; }
+.layout__aside { min-width: 0; }
 .article { max-width: 760px; }
+.article--narrow { max-width: 820px; }
 .article h2 { font-size: 28px; color: var(--navy); margin: 40px 0 16px; }
 .article h3 { font-size: 21px; color: var(--navy); margin: 28px 0 12px; }
 .article p { margin-bottom: 16px; color: #33414F; }
@@ -389,7 +403,13 @@ table.data tr:last-child td { border-bottom: none; }
     .grid--4 { grid-template-columns: repeat(2, 1fr); }
     .steps--row { grid-template-columns: repeat(2, 1fr); }
     .stats { grid-template-columns: repeat(2, 1fr); }
-    .layout { grid-template-columns: 1fr; }
+    /* Обе структуры layout — в одну колонку. Повышенная специфичность :has()
+       требует явного переопределения, иначе десктопное правило «победит» на планшете. */
+    .layout,
+    .layout:has(.layout__main) { grid-template-columns: 1fr; }
+    /* Контент выше навигации по разделу */
+    .layout > .sidebar { order: 2; }
+    .layout__aside { order: 2; }
     .sidebar { position: static; grid-template-columns: 1fr; }
 }
 
@@ -455,6 +475,102 @@ table.data tr:last-child td { border-bottom: none; }
     .calc { grid-template-columns: 1fr; }
     .calc__row { grid-template-columns: 1fr; }
     .calc__result { position: static; }
+}
+
+/* ==========================================================================
+   Промо-лендинги под Яндекс.Директ (inc/promo-page.php)
+   ========================================================================== */
+
+/* Шапка: только логотип + телефон + CTA, без навигации */
+.promo-header { position: sticky; top: 0; z-index: 50; background: var(--navy); border-bottom: 1px solid rgba(255,255,255,.08); }
+.promo-header__inner { display: flex; align-items: center; justify-content: space-between; gap: 16px; min-height: 68px; }
+.promo-header__contact { display: flex; align-items: center; gap: 18px; }
+.promo-header__phone { font-family: var(--font-head); font-weight: 700; color: #fff; font-size: 18px; white-space: nowrap; }
+.promo-header__phone:hover { color: var(--accent); }
+
+/* Герой */
+.promo-hero { background: linear-gradient(160deg, var(--navy) 0%, var(--navy-deep) 100%); color: #fff; padding: 56px 0 64px; }
+.promo-hero__grid { display: grid; grid-template-columns: 1.1fr .9fr; gap: 48px; align-items: center; }
+.promo-hero__title { font-family: var(--font-head); font-weight: 800; font-size: clamp(28px, 4vw, 44px); line-height: 1.12; color: #fff; text-wrap: balance; }
+.promo-hero__sub { margin-top: 16px; font-size: clamp(16px, 2vw, 19px); line-height: 1.55; color: rgba(255,255,255,.82); max-width: 560px; }
+
+.promo-benefits { list-style: none; margin: 28px 0 0; padding: 0; display: grid; gap: 14px; }
+.promo-benefits li { display: flex; align-items: flex-start; gap: 12px; font-size: 16px; line-height: 1.5; color: #EAF0F7; }
+.promo-benefits svg { flex: 0 0 auto; margin-top: 1px; }
+
+.promo-hero__cta { margin-top: 30px; display: flex; align-items: center; gap: 18px; flex-wrap: wrap; }
+.promo-hero__phone-big { display: inline-flex; align-items: center; gap: 10px; font-family: var(--font-head); font-weight: 800; font-size: 24px; color: #fff; }
+.promo-hero__phone-big:hover { color: var(--accent); }
+.promo-hero__hours { font-size: 14px; color: rgba(255,255,255,.6); }
+
+/* Форма-карточка в герое стоит на светлом фоне — базовые стили .lead-card уже есть */
+.promo-hero .lead-card { margin: 0; }
+
+/* Полоса доверия */
+.promo-strip { background: var(--mist); border-bottom: 1px solid var(--line); }
+.promo-strip__grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; padding: 32px 0; }
+.promo-strip__item { text-align: center; }
+.promo-strip__value { display: block; font-family: var(--font-head); font-weight: 800; font-size: clamp(24px, 3vw, 34px); color: var(--accent); line-height: 1.1; }
+.promo-strip__label { display: block; margin-top: 6px; font-size: 14px; color: var(--steel); line-height: 1.4; }
+
+/* Заголовки секций */
+.promo-h2 { font-family: var(--font-head); font-weight: 800; font-size: clamp(24px, 3vw, 32px); color: var(--navy); margin-bottom: 32px; text-wrap: balance; }
+
+/* Шаги */
+.promo-steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+.promo-step { background: #fff; border: 1px solid var(--line); border-radius: var(--radius); padding: 26px 22px; }
+.promo-step__num { display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 50%; background: var(--accent); color: #fff; font-family: var(--font-head); font-weight: 800; font-size: 18px; }
+.promo-step__title { font-family: var(--font-head); font-weight: 700; color: var(--navy); font-size: 18px; margin: 16px 0 8px; }
+.promo-step__text { color: var(--steel); font-size: 15px; line-height: 1.55; }
+
+/* Преимущества */
+.promo-adv-wrap { background: var(--mist); }
+.promo-adv { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.promo-adv__card { background: #fff; border: 1px solid var(--line); border-radius: var(--radius); padding: 26px 24px; }
+.promo-adv__title { font-family: var(--font-head); font-weight: 700; color: var(--navy); font-size: 18px; margin-bottom: 10px; }
+.promo-adv__text { color: var(--steel); font-size: 15px; line-height: 1.6; }
+
+/* Финальный CTA */
+.promo-final { background: var(--navy); color: #fff; }
+.promo-final__inner { display: flex; align-items: center; justify-content: space-between; gap: 28px; padding: 48px 0; flex-wrap: wrap; }
+.promo-final__title { font-family: var(--font-head); font-weight: 800; font-size: clamp(22px, 3vw, 30px); color: #fff; }
+.promo-final__text { margin-top: 10px; color: rgba(255,255,255,.8); font-size: 16px; line-height: 1.55; max-width: 520px; }
+.promo-final__actions { display: flex; gap: 14px; flex-wrap: wrap; }
+.btn--ghost { background: transparent; color: #fff; border: 1.5px solid rgba(255,255,255,.35); }
+.btn--ghost:hover { border-color: var(--accent); color: var(--accent); }
+
+/* SEO-текст */
+.promo-seo { max-width: 820px; color: var(--steel); font-size: 15px; line-height: 1.7; }
+.promo-seo p { margin-bottom: 14px; }
+
+/* Футер промо */
+.promo-footer { background: var(--navy-deep); color: #9FB0C4; padding: 40px 0 24px; }
+.promo-footer__inner { display: flex; justify-content: space-between; gap: 32px; flex-wrap: wrap; }
+.promo-footer__brand { font-family: var(--font-head); font-weight: 800; font-size: 20px; color: #fff; }
+.promo-footer__brand span { color: var(--accent); }
+.promo-footer__slogan { margin-top: 8px; font-size: 14px; line-height: 1.5; max-width: 340px; }
+.promo-footer__col { display: flex; flex-direction: column; gap: 8px; }
+.promo-footer__link { color: #9FB0C4; font-size: 15px; }
+.promo-footer__link:hover { color: var(--accent); }
+.promo-footer__legal { margin-top: 28px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,.08); font-size: 13px; line-height: 1.6; color: #7C8CA1; display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+
+/* Адаптив промо */
+@media (max-width: 1023px) {
+    .promo-hero__grid { grid-template-columns: 1fr; gap: 36px; }
+    .promo-hero .lead-card { max-width: 480px; }
+    .promo-steps { grid-template-columns: repeat(2, 1fr); }
+    .promo-adv { grid-template-columns: 1fr 1fr; }
+    .promo-strip__grid { grid-template-columns: repeat(2, 1fr); gap: 20px; }
+}
+@media (max-width: 767px) {
+    .promo-hero { padding: 40px 0 48px; }
+    .promo-header__phone { display: none; }
+    .promo-hero__cta { gap: 12px; }
+    .promo-steps { grid-template-columns: 1fr; }
+    .promo-adv { grid-template-columns: 1fr; }
+    .promo-final__inner { flex-direction: column; align-items: flex-start; }
+    .promo-final__actions { width: 100%; }
+    .promo-final__actions .btn { flex: 1; text-align: center; justify-content: center; }
 }
 
 /* Юридические реквизиты в футере */
