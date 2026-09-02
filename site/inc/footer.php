@@ -13,8 +13,11 @@
         </div>
         <p class="footer__copy">© 2026 ExpressLogist. Все права защищены</p>
         <nav class="footer__links" aria-label="Дополнительные ссылки">
-            <a href="/o-kompanii/" class="footer__link">О компании и условия работы</a>
-            <a href="#" class="footer__link">Политика конфиденциальности</a>
+            <a href="/o-kompanii/" class="footer__link">О компании</a>
+            <a href="/baza-znaniy/" class="footer__link">База знаний</a>
+            <a href="/vakansii/" class="footer__link">Вакансии по городам</a>
+            <a href="/kontakty/" class="footer__link">Контакты</a>
+            <a href="/politika-konfidencialnosti/" class="footer__link">Политика конфиденциальности</a>
         </nav>
     </div>
 </footer>

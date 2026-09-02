@@ -3,11 +3,9 @@
  * Общая шапка сайта (используется на главной и во всех страницах силоса).
  *
  * Перед подключением можно задать:
- *   $isHome (bool) — на главной якоря ведут на "#jobs"/"#contacts",
- *                    на прочих страницах — на "/#jobs"/"/#contacts".
+ *   $isHome (bool) — влияет только на порядок фокуса/якоря "О нас" на главной.
  */
 $isHome = $isHome ?? false;
-$anchorPrefix = $isHome ? '' : '/';
 ?>
 <header class="header" id="top">
     <div class="container header__inner">
@@ -20,9 +18,10 @@ $anchorPrefix = $isHome ? '' : '/';
         </a>
 
         <nav class="nav" id="nav" aria-label="Основное меню">
-            <a href="/o-kompanii/" class="nav__link">О нас</a>
-            <a href="<?php echo $anchorPrefix; ?>#jobs" class="nav__link">Вакансии</a>
-            <a href="<?php echo $anchorPrefix; ?>#contacts" class="nav__link">Контакты</a>
+            <a href="/o-kompanii/" class="nav__link">О компании</a>
+            <a href="/baza-znaniy/" class="nav__link">База знаний</a>
+            <a href="/vakansii/" class="nav__link">Вакансии</a>
+            <a href="/kontakty/" class="nav__link">Контакты</a>
             <a href="tel:88005553535" class="nav__phone nav__phone--mobile">8 (800) 555-35-35</a>
         </nav>
 
