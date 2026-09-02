@@ -19,6 +19,56 @@ $assetsPrefix    = $assetsPrefix ?? '';
 $bodyClass       = $bodyClass ?? '';
 $extraHead       = $extraHead ?? '';
 $canonical       = $baseUrl . $pageUrl;
+
+/* ---------- Глобальная разметка Organization + WebSite (на каждой странице) ---------- */
+$org = [
+    '@type'    => 'Organization',
+    '@id'      => rtrim($baseUrl, '/') . '/#organization',
+    'name'     => $siteName,
+    'url'      => rtrim($baseUrl, '/') . '/',
+    'logo'     => rtrim($baseUrl, '/') . '/img/apple-touch-icon.png',
+    'image'    => rtrim($baseUrl, '/') . '/img/og-cover.png',
+    'description' => $siteSlogan ?? '',
+];
+if (!empty($phoneHref)) {
+    $org['contactPoint'] = [
+        '@type'             => 'ContactPoint',
+        'telephone'         => $phoneHref,
+        'contactType'       => 'sales',
+        'areaServed'        => ['RU', 'BY', 'KZ', 'AM', 'KG', 'UZ', 'AZ', 'TJ', 'MD'],
+        'availableLanguage' => 'Russian',
+    ];
+}
+if (!empty($email)) {
+    $org['email'] = $email;
+}
+if (!empty($address) && is_array($address)) {
+    $org['address'] = [
+        '@type'           => 'PostalAddress',
+        'streetAddress'   => $address['street']  ?? '',
+        'addressLocality' => $address['city']    ?? '',
+        'postalCode'      => $address['zip']     ?? '',
+        'addressCountry'  => $address['country'] ?? 'RU',
+    ];
+}
+if (!empty($socialLinks) && is_array($socialLinks)) {
+    $sameAs = array_values(array_filter($socialLinks));
+    if ($sameAs) {
+        $org['sameAs'] = $sameAs;
+    }
+}
+$site = [
+    '@type' => 'WebSite',
+    '@id'   => rtrim($baseUrl, '/') . '/#website',
+    'name'  => $siteName,
+    'url'   => rtrim($baseUrl, '/') . '/',
+    'inLanguage'  => 'ru-RU',
+    'publisher'   => ['@id' => rtrim($baseUrl, '/') . '/#organization'],
+];
+$globalLd = json_encode(
+    ['@context' => 'https://schema.org', '@graph' => [$org, $site]],
+    JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES
+);
 ?>
 <!DOCTYPE html>
 <html lang="ru" class="theme">
@@ -57,6 +107,9 @@ $canonical       = $baseUrl . $pageUrl;
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="<?php echo e($assetsPrefix); ?>css/style.css">
+
+    <!-- Глобальная разметка Organization + WebSite -->
+    <script type="application/ld+json"><?php echo $globalLd; ?></script>
 
     <?php echo $extraHead; ?>
 

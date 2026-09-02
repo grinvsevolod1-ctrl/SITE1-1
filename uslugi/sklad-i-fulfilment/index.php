@@ -56,4 +56,20 @@ $blocks = [
     ['type' => 'cta', 'title' => 'Нужен склад и фулфилмент?', 'text' => 'Расскажите о товаре и объёмах — подберём складское решение.'],
 ];
 
+$pageSchema = [
+    '@type'       => 'Service',
+    'serviceType' => 'Складское хранение и фулфилмент',
+    'name'        => 'Склад и фулфилмент по СНГ',
+    'description' => $pageDescription,
+    'provider'    => ['@id' => rtrim($baseUrl, '/') . '/#organization'],
+    'areaServed'  => ['RU', 'BY', 'KZ', 'AM', 'KG', 'UZ', 'AZ', 'TJ', 'MD'],
+    'url'         => rtrim($baseUrl, '/') . $pageUrl,
+];
+
+$related = [
+    ['url' => '/uslugi/sbornye-gruzy/', 'title' => 'Сборные грузы (LTL)', 'desc' => 'Отгрузка заказов со склада по региону'],
+    ['url' => '/uslugi/krupnogabaritnaya-dostavka/', 'title' => 'Крупногабаритная доставка', 'desc' => 'Приёмка и хранение негабаритных грузов'],
+    ['url' => '/napravleniya/', 'title' => 'Направления по СНГ', 'desc' => 'Доставка со склада по 9 странам'],
+];
+
 require __DIR__ . '/../../inc/content-page.php';

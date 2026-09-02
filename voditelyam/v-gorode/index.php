@@ -47,4 +47,10 @@ $blocks = [
     ['type' => 'cta', 'title' => 'Хотите работать в городе?', 'text' => 'Позвоните — расскажем о маршрутах и графике.'],
 ];
 
+$related = [
+    ['url' => '/voditelyam/dalnoboyshchikam/', 'title' => 'Дальнобойщикам', 'desc' => 'Межгород и международные рейсы по СНГ'],
+    ['url' => '/voditelyam/so-svoim-avto/', 'title' => 'Со своим авто', 'desc' => 'Условия для водителей с личной машиной'],
+    ['url' => '/o-kompanii/', 'title' => 'О компании', 'desc' => 'Кто мы и как устроена наша сеть'],
+];
+
 require __DIR__ . '/../../inc/content-page.php';

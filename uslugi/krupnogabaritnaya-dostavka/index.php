@@ -59,4 +59,20 @@ $blocks = [
     ['type' => 'cta', 'title' => 'Нужно перевезти негабарит?', 'text' => 'Пришлите параметры груза — рассчитаем стоимость и подберём транспорт.'],
 ];
 
+$pageSchema = [
+    '@type'       => 'Service',
+    'serviceType' => 'Крупногабаритная и негабаритная грузоперевозка',
+    'name'        => 'Крупногабаритная доставка по СНГ',
+    'description' => $pageDescription,
+    'provider'    => ['@id' => rtrim($baseUrl, '/') . '/#organization'],
+    'areaServed'  => ['RU', 'BY', 'KZ', 'AM', 'KG', 'UZ', 'AZ', 'TJ', 'MD'],
+    'url'         => rtrim($baseUrl, '/') . $pageUrl,
+];
+
+$related = [
+    ['url' => '/uslugi/otdelnaya-mashina/', 'title' => 'Отдельная машина (FTL)', 'desc' => 'Прямая доставка целой фурой без догрузки'],
+    ['url' => '/uslugi/sklad-i-fulfilment/', 'title' => 'Склад и фулфилмент', 'desc' => 'Хранение, комплектация и отгрузка заказов'],
+    ['url' => '/napravleniya/', 'title' => 'Направления по СНГ', 'desc' => 'Маршруты и сроки по 9 странам региона'],
+];
+
 require __DIR__ . '/../../inc/content-page.php';

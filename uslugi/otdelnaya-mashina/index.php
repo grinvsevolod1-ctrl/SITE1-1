@@ -54,4 +54,20 @@ $blocks = [
     ['type' => 'cta', 'title' => 'Нужна отдельная машина?', 'text' => 'Опишите груз и маршрут — подберём кузов и рассчитаем стоимость.'],
 ];
 
+$pageSchema = [
+    '@type'       => 'Service',
+    'serviceType' => 'Перевозка отдельной машиной (FTL)',
+    'name'        => 'Отдельная машина (FTL) по СНГ',
+    'description' => $pageDescription,
+    'provider'    => ['@id' => rtrim($baseUrl, '/') . '/#organization'],
+    'areaServed'  => ['RU', 'BY', 'KZ', 'AM', 'KG', 'UZ', 'AZ', 'TJ', 'MD'],
+    'url'         => rtrim($baseUrl, '/') . $pageUrl,
+];
+
+$related = [
+    ['url' => '/uslugi/sbornye-gruzy/', 'title' => 'Сборные грузы (LTL)', 'desc' => 'Когда груз меньше целой машины'],
+    ['url' => '/uslugi/krupnogabaritnaya-dostavka/', 'title' => 'Крупногабаритная доставка', 'desc' => 'Негабарит и тяжеловесы отдельным транспортом'],
+    ['url' => '/napravleniya/', 'title' => 'Направления по СНГ', 'desc' => 'Прямые маршруты фурами по региону'],
+];
+
 require __DIR__ . '/../../inc/content-page.php';

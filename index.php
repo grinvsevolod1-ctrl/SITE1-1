@@ -8,25 +8,6 @@ $pageUrl         = '/';
 $assetsPrefix    = '';
 $navActive       = null;
 
-// JSON-LD: организация
-$extraHead = '<script type="application/ld+json">' . json_encode([
-    '@context' => 'https://schema.org',
-    '@type' => 'MovingCompany',
-    'name' => $siteName,
-    'description' => $pageDescription,
-    'telephone' => '+' . preg_replace('/\D/', '', $phoneHref),
-    'email' => $email,
-    'url' => $baseUrl,
-    'areaServed' => ['Россия', 'Беларусь', 'Казахстан', 'Армения', 'Кыргызстан', 'Узбекистан', 'Азербайджан', 'Таджикистан', 'Молдова'],
-    'address' => [
-        '@type' => 'PostalAddress',
-        'streetAddress' => $address['street'],
-        'addressLocality' => $address['city'],
-        'postalCode' => $address['zip'],
-        'addressCountry' => $address['country'],
-    ],
-], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) . '</script>';
-
 require __DIR__ . '/inc/head.php';
 require __DIR__ . '/inc/header.php';
 ?>
@@ -231,7 +212,7 @@ require __DIR__ . '/inc/header.php';
             <div class="faq">
                 <?php
                 $faq = [
-                    ['Возите ли вы негабаритные грузы?', 'Да. У нас есть тралы, низкорамные платформы и разрешения на перевозку негабарита. Организуем сопровождение и согласование маршрута.'],
+                    ['Возите ли вы негабаритные грузы?', 'Да. У нас есть тралы, низкорамные платформы и разрешения на перевозку негабарита. Организуем сопровождение и согласование ма��шрута.'],
                     ['С какого веса и объёма работаете?', 'От 1 кг на сборных отправках до 20 тонн и более на отдельных машинах и спецтранспорте.'],
                     ['Работаете ли вы с НДС и по договору?', 'Да, работаем с юридическими лицами и ИП по договору, предоставляем полный пакет закрывающих документов, в том числе с НДС.'],
                     ['Страхуете ли груз?', 'Груз можно застраховать на полную стоимость. Для регулярных отправок предлагаем рамочные условия страхования.'],

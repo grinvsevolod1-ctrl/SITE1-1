@@ -56,4 +56,20 @@ $blocks = [
     ['type' => 'cta', 'title' => 'Рассчитать сборную доставку', 'text' => 'Укажите вес, габариты и маршрут — пришлём точную стоимость.'],
 ];
 
+$pageSchema = [
+    '@type'       => 'Service',
+    'serviceType' => 'Перевозка сборных грузов (LTL)',
+    'name'        => 'Сборные грузы по СНГ',
+    'description' => $pageDescription,
+    'provider'    => ['@id' => rtrim($baseUrl, '/') . '/#organization'],
+    'areaServed'  => ['RU', 'BY', 'KZ', 'AM', 'KG', 'UZ', 'AZ', 'TJ', 'MD'],
+    'url'         => rtrim($baseUrl, '/') . $pageUrl,
+];
+
+$related = [
+    ['url' => '/uslugi/krupnogabaritnaya-dostavka/', 'title' => 'Крупногабаритная доставка', 'desc' => 'Негабарит, тяжеловесы и проектные грузы'],
+    ['url' => '/uslugi/otdelnaya-mashina/', 'title' => 'Отдельная машина (FTL)', 'desc' => 'Когда объём вырос до целой фуры'],
+    ['url' => '/napravleniya/', 'title' => 'Направления по СНГ', 'desc' => 'Регулярные сборные маршруты по региону'],
+];
+
 require __DIR__ . '/../../inc/content-page.php';

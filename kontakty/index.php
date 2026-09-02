@@ -18,21 +18,21 @@ $crumbs = [
     ['title' => 'Контакты', 'url' => null],
 ];
 
-// JSON-LD: организация с контактами
+// BreadcrumbList для страницы контактов (Organization задаётся глобально в head.php)
+$pos = 1;
+$crumbItems = [];
+foreach ($crumbs as $cr) {
+    $entry = ['@type' => 'ListItem', 'position' => $pos, 'name' => $cr['title']];
+    if (!empty($cr['url'])) {
+        $entry['item'] = rtrim($baseUrl, '/') . $cr['url'];
+    }
+    $crumbItems[] = $entry;
+    $pos++;
+}
 $extraHead = '<script type="application/ld+json">' . json_encode([
     '@context' => 'https://schema.org',
-    '@type' => 'MovingCompany',
-    'name' => $siteName,
-    'telephone' => '+' . preg_replace('/\D/', '', $phoneHref),
-    'email' => $email,
-    'url' => $baseUrl,
-    'address' => [
-        '@type' => 'PostalAddress',
-        'streetAddress' => $address['street'],
-        'addressLocality' => $address['city'],
-        'postalCode' => $address['zip'],
-        'addressCountry' => $address['country'],
-    ],
+    '@type' => 'BreadcrumbList',
+    'itemListElement' => $crumbItems,
 ], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) . '</script>';
 
 require __DIR__ . '/../inc/head.php';

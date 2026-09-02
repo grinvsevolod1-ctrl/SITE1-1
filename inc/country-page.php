@@ -94,4 +94,17 @@ $blocks = [
     ['type' => 'cta', 'title' => 'Рассчитать доставку в ' . $c['name'], 'text' => 'Укажите груз и город — пришлём стоимость и срок по этому направлению.'],
 ];
 
+// Перелинковка: несколько соседних стран + хаб услуг
+$related = [];
+foreach ($countries as $slug => $c) {
+    if ($slug === $currentSlug) { continue; }
+    $related[] = [
+        'url'   => '/napravleniya/' . $slug . '/',
+        'title' => 'Доставка в ' . $c['name'],
+        'desc'  => !empty($c['capital']) ? ('Маршруты и сроки · ' . $c['capital']) : 'Маршруты и сроки доставки',
+    ];
+    if (count($related) >= 3) { break; }
+}
+$related[] = ['url' => '/uslugi/', 'title' => 'Все услуги', 'desc' => 'Крупногабарит, сборные, FTL, склад'];
+
 require __DIR__ . '/content-page.php';

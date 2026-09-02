@@ -22,6 +22,60 @@
  * Требует config.php, nav-data.php (подключить до этого файла).
  */
 
+/* ---------- Автогенерация Schema.org (JSON-LD) ---------- */
+$schemaGraph = [];
+
+// BreadcrumbList из хлебных крошек
+if (!empty($crumbs)) {
+    $items = [];
+    $pos = 1;
+    foreach ($crumbs as $cr) {
+        $entry = [
+            '@type'    => 'ListItem',
+            'position' => $pos,
+            'name'     => $cr['title'],
+        ];
+        // Абсолютный URL для всех крошек, кроме текущей (url === null)
+        if (!empty($cr['url'])) {
+            $entry['item'] = rtrim($baseUrl, '/') . $cr['url'];
+        }
+        $items[] = $entry;
+        $pos++;
+    }
+    $schemaGraph[] = [
+        '@type'           => 'BreadcrumbList',
+        'itemListElement' => $items,
+    ];
+}
+
+// FAQPage из первого блока типа faq
+foreach ($blocks as $b) {
+    if (($b['type'] ?? '') === 'faq' && !empty($b['items'])) {
+        $qa = [];
+        foreach ($b['items'] as $f) {
+            $qa[] = [
+                '@type'          => 'Question',
+                'name'           => $f['q'],
+                'acceptedAnswer' => ['@type' => 'Answer', 'text' => $f['a']],
+            ];
+        }
+        $schemaGraph[] = ['@type' => 'FAQPage', 'mainEntity' => $qa];
+        break; // одна FAQPage на страницу
+    }
+}
+
+// Дополнительная разметка страницы (например, Service) — задаётся до подключения шаблона
+if (!empty($pageSchema) && is_array($pageSchema)) {
+    $schemaGraph[] = $pageSchema;
+}
+
+if ($schemaGraph) {
+    $ld = ['@context' => 'https://schema.org'];
+    $ld['@graph'] = $schemaGraph;
+    $json = json_encode($ld, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+    $extraHead = ($extraHead ?? '') . '<script type="application/ld+json">' . $json . '</script>';
+}
+
 require INC . '/head.php';
 require INC . '/header.php';
 ?>
@@ -90,6 +144,19 @@ require INC . '/header.php';
                                 <?php echo $b['html']; ?>
                         <?php break; endswitch; ?>
                     <?php endforeach; ?>
+                    <?php if (!empty($related)): ?>
+                    <nav class="related" aria-label="Смотрите также">
+                        <h2>Смотрите также</h2>
+                        <div class="related__grid">
+                            <?php foreach ($related as $rl): ?>
+                            <a class="related__card" href="<?php echo e($rl['url']); ?>">
+                                <span class="related__title"><?php echo e($rl['title']); ?></span>
+                                <?php if (!empty($rl['desc'])): ?><span class="related__desc"><?php echo e($rl['desc']); ?></span><?php endif; ?>
+                            </a>
+                            <?php endforeach; ?>
+                        </div>
+                    </nav>
+                    <?php endif; ?>
                 </article>
             </div>
         </div>
