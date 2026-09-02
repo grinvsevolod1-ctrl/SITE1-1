@@ -38,6 +38,12 @@
         if (typeof window.gtag === 'function') {
             window.gtag('event', 'lead_submit', { event_category: 'form', event_label: 'request' });
         }
+        // Собственная first-party аналитика: определяем тип формы по скрытому полю form_type
+        try {
+            var ftEl = document.querySelector('#lead-form [name="form_type"]');
+            var ft = ftEl ? ftEl.value : 'lead';
+            document.dispatchEvent(new CustomEvent('elg:lead', { detail: { type: ft, label: ft } }));
+        } catch (e) {}
     }
 
     /* ---------------- Форма заявки ---------------- */
@@ -170,7 +176,7 @@
             var rate = RATES[service];
 
             if (!distance || distance <= 0) {
-                showError('Укажите расстояние в километрах.');
+                showError('Укажите расстояние в к��лометрах.');
                 return;
             }
 

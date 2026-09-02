@@ -85,6 +85,7 @@ require __DIR__ . '/head.php';
                 <p class="lead-card__title">Заявка на расчёт</p>
                 <p class="lead-card__note">Рассчитаем стоимость и сроки бесплатно</p>
                 <form id="lead-form" action="/send.php" method="post" novalidate>
+                    <input type="hidden" name="form_type" value="lead">
                     <div class="hp-field" aria-hidden="true">
                         <label for="f-website">Не заполняйте это поле</label>
                         <input type="text" id="f-website" name="website" tabindex="-1" autocomplete="off">
@@ -233,5 +234,6 @@ require __DIR__ . '/head.php';
 </footer>
 
     <script src="<?php echo asset('js/script.js', $assetsPrefix); ?>" defer></script>
+    <?php include INC . '/analytics-tracker.php'; ?>
 </body>
 </html>

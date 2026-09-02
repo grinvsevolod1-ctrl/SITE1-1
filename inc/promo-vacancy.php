@@ -267,6 +267,7 @@ require __DIR__ . '/head.php';
     </div>
 </footer>
 
-    <script src="<?php echo asset('js/script.js', $assetsPrefix); ?>" defer></script>
-</body>
+  <script src="<?php echo asset('js/script.js', $assetsPrefix); ?>" defer></script>
+  <?php include INC . '/analytics-tracker.php'; ?>
+  </body>
 </html>
