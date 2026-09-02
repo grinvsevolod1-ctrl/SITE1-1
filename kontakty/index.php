@@ -105,6 +105,16 @@ require __DIR__ . '/../inc/header.php';
                         ответим в течение одного рабочего дня.
                     </p>
 
+                    <?php if (!empty($legal)): ?>
+                    <h2>Реквизиты</h2>
+                    <ul class="req-list">
+                        <li><span>Наименование</span><b><?php echo e($legal['name']); ?></b></li>
+                        <li><span>ИНН</span><b><?php echo e($legal['inn']); ?></b></li>
+                        <li><span>ОГРН</span><b><?php echo e($legal['ogrn']); ?></b></li>
+                        <li><span>Юридический адрес</span><b><?php echo e($legal['legalAddr']); ?></b></li>
+                    </ul>
+                    <?php endif; ?>
+
                     <div class="cta-band" style="margin-top:8px">
                         <div class="cta-band__text">
                             <h2>Нужно перевезти груз?</h2>

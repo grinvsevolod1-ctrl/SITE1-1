@@ -85,7 +85,7 @@ require __DIR__ . '/inc/header.php';
                     </div>
                     <label class="consent">
                         <input type="checkbox" name="agree" value="1" required>
-                        <span>Согласен с обработкой персональных данных и <a href="/politika-konfidencialnosti/">политикой конфиденциальности</a></span>
+                        <span>Я даю согласие на обработку персональных данных в соответствии с Федеральным законом №&nbsp;152-ФЗ и принимаю <a href="/politika-konfidencialnosti/">политику конфиденциальности</a></span>
                     </label>
                     <div class="field__error" data-error="agree"></div>
                     <button type="submit" class="btn btn--accent btn--block">Отправить заявку</button>
@@ -169,7 +169,7 @@ require __DIR__ . '/inc/header.php';
         <div class="container">
             <div class="section__head section__head--center">
                 <span class="eyebrow">Масштаб сети</span>
-                <h2 class="section__title">Одна из крупнейших грузовых сетей в СНГ</h2>
+                <h2 class="section__title">Разветвлённая грузовая сеть по всему СНГ</h2>
                 <p class="section__subtitle">Терминалы, склады и партнёры в каждой стране региона — груз не «зависает» на границах.</p>
             </div>
             <div class="stats">

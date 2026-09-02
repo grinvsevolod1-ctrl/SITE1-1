@@ -39,9 +39,21 @@ $year = date('Y');
             </nav>
         </div>
 
+        <?php if (!empty($legal)): ?>
+        <p class="footer__legal">
+            <?php echo e($legal['name']); ?> · ИНН <?php echo e($legal['inn']); ?> · ОГРН <?php echo e($legal['ogrn']); ?><br>
+            <?php echo e($legal['legalAddr']); ?>
+        </p>
+        <?php endif; ?>
+
         <div class="footer__bottom">
             <p class="footer__copy">© <?php echo e($year); ?> <?php echo e($siteName); ?>. Все права защищены</p>
             <a href="/politika-konfidencialnosti/" class="footer__link">Политика конфиденциальности</a>
         </div>
     </div>
 </footer>
+
+<div class="cookie-bar" id="cookie-bar" role="dialog" aria-live="polite" aria-label="Уведомление об использовании cookie" hidden>
+    <p>Мы используем файлы cookie и системы аналитики для работы сайта и улучшения сервиса. Оставаясь на сайте, вы соглашаетесь с <a href="/politika-konfidencialnosti/">политикой конфиденциальности</a>.</p>
+    <button type="button" class="btn btn--accent" id="cookie-accept">Принять</button>
+</div>

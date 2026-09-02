@@ -230,4 +230,26 @@
             if (typeof window.gtag === 'function') window.gtag('event', 'calc_use', { event_category: 'calculator', event_label: service });
         });
     }
+
+    /* ---------------- Куки-уведомление (152-ФЗ) ---------------- */
+    var cookieBar = document.getElementById('cookie-bar');
+    var cookieAccept = document.getElementById('cookie-accept');
+
+    if (cookieBar && cookieAccept) {
+        var accepted = document.cookie.indexOf('cookie_consent=1') !== -1;
+        if (!accepted) {
+            cookieBar.hidden = false;
+            // Плавное появление после отрисовки
+            requestAnimationFrame(function () {
+                requestAnimationFrame(function () { cookieBar.classList.add('is-visible'); });
+            });
+            cookieAccept.addEventListener('click', function () {
+                var d = new Date();
+                d.setFullYear(d.getFullYear() + 1);
+                document.cookie = 'cookie_consent=1; expires=' + d.toUTCString() + '; path=/; SameSite=Lax';
+                cookieBar.classList.remove('is-visible');
+                setTimeout(function () { cookieBar.hidden = true; }, 400);
+            });
+        }
+    }
 })();
