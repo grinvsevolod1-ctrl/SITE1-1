@@ -1,6 +1,9 @@
 User-agent: *
 Allow: /
 Disallow: /inc/
+Disallow: /logs/
 Disallow: /send.php
+Disallow: /*?*
 
 Sitemap: https://expresslogist.ru/sitemap.xml
+# AI-краулеры: краткая карта сайта — https://expresslogist.ru/llms.txt

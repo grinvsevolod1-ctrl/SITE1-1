@@ -27,7 +27,7 @@ $org = [
     'name'     => $siteName,
     'url'      => rtrim($baseUrl, '/') . '/',
     'logo'     => rtrim($baseUrl, '/') . '/img/apple-touch-icon.png',
-    'image'    => rtrim($baseUrl, '/') . '/img/og-cover.png',
+    'image'    => rtrim($baseUrl, '/') . '/img/og-cover.jpg',
     'description' => $siteSlogan ?? '',
 ];
 if (!empty($phoneHref)) {
@@ -91,7 +91,7 @@ $globalLd = json_encode(
     <meta property="og:title" content="<?php echo e($pageTitle); ?>">
     <meta property="og:description" content="<?php echo e($pageDescription); ?>">
     <meta property="og:url" content="<?php echo e($canonical); ?>">
-    <meta property="og:image" content="<?php echo e($baseUrl); ?>/img/og-cover.png">
+    <meta property="og:image" content="<?php echo e($baseUrl); ?>/img/og-cover.jpg">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
 
@@ -99,12 +99,17 @@ $globalLd = json_encode(
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="<?php echo e($pageTitle); ?>">
     <meta name="twitter:description" content="<?php echo e($pageDescription); ?>">
-    <meta name="twitter:image" content="<?php echo e($baseUrl); ?>/img/og-cover.png">
+    <meta name="twitter:image" content="<?php echo e($baseUrl); ?>/img/og-cover.jpg">
 
     <!-- Шрифты: Manrope (заголовки) + Inter (текст) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <?php /* Preload фона героя ускоряет LCP на главной, где он выше сгиба */ ?>
+    <?php if (!empty($isHome)): ?>
+    <link rel="preload" as="image" href="<?php echo e($assetsPrefix); ?>img/hero-freight.webp" type="image/webp">
+    <?php endif; ?>
 
     <link rel="stylesheet" href="<?php echo e($assetsPrefix); ?>css/style.css">
 
