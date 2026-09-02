@@ -7,6 +7,8 @@
  * использовался и в блоке «Города», и в выпадающем списке формы.
  */
 
+require __DIR__ . '/inc/config.php';
+
 $cities = [
     'Москва', 'Санкт-Петербург', 'Новосибирск', 'Екатеринбург', 'Казань',
     'Нижний Новгород', 'Челябинск', 'Омск', 'Ростов-на-Дону', 'Уфа',
@@ -16,6 +18,8 @@ $cities = [
 
 // ID счётчика Яндекс.Метрики. Вставьте свой номер вместо пустой строки.
 $yandexMetrikaId = '';
+
+$isHome = true;
 ?>
 <!DOCTYPE html>
 <html lang="ru">
@@ -25,6 +29,16 @@ $yandexMetrikaId = '';
     <title>Работа курьером в ExpressLogist — доход от 90 000 ₽ в месяц</title>
     <meta name="description" content="Стань курьером в ExpressLogist. Доход от 90 000 ₽, гибкий график, официальное оформление. Работа в 150+ городах России.">
     <meta name="theme-color" content="#1A73E8">
+    <link rel="canonical" href="<?php echo htmlspecialchars($baseUrl, ENT_QUOTES, 'UTF-8'); ?>/">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="ru_RU">
+    <meta property="og:site_name" content="ExpressLogist">
+    <meta property="og:title" content="Работа курьером в ExpressLogist — доход от 90 000 ₽ в месяц">
+    <meta property="og:description" content="Стань курьером в ExpressLogist. Доход от 90 000 ₽, гибкий график, официальное оформление. Работа в 150+ городах России.">
+    <meta property="og:url" content="<?php echo htmlspecialchars($baseUrl, ENT_QUOTES, 'UTF-8'); ?>/">
+    <meta property="og:image" content="<?php echo htmlspecialchars($baseUrl, ENT_QUOTES, 'UTF-8'); ?>/img/hero-courier.webp">
 
     <!-- Шрифт Roboto (Google Fonts): 400 — текст, 700 — заголовки -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -32,6 +46,23 @@ $yandexMetrikaId = '';
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="css/style.css">
+
+    <!-- Organization JSON-LD: единая карточка компании для поисковиков -->
+    <script type="application/ld+json">
+    <?php echo json_encode([
+        '@context' => 'https://schema.org',
+        '@type' => 'Organization',
+        'name' => 'ExpressLogist',
+        'url' => $baseUrl . '/',
+        'logo' => $baseUrl . '/img/hero-courier.webp',
+        'contactPoint' => [
+            '@type' => 'ContactPoint',
+            'telephone' => '+7-800-555-35-35',
+            'contactType' => 'customer service',
+            'areaServed' => 'RU',
+        ],
+    ], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES); ?>
+    </script>
 
     <?php if ($yandexMetrikaId !== ''): ?>
     <!-- Yandex.Metrika counter -->
@@ -52,34 +83,7 @@ $yandexMetrikaId = '';
 <body>
 
 <!-- ========== ШАПКА ========== -->
-<header class="header" id="top">
-    <div class="container header__inner">
-        <a href="#top" class="logo" aria-label="ExpressLogist — на главную">
-            <svg class="logo__mark" width="36" height="36" viewBox="0 0 36 36" fill="none" aria-hidden="true">
-                <rect width="36" height="36" rx="8" fill="#FF6B35"/>
-                <path d="M7 12h14l-2 4H9l-2-4Zm3 6h12l-2 4h-8l-2-4Zm3 6h10l-2 4h-6l-2-4Z" fill="#fff"/>
-            </svg>
-            <span class="logo__text">Express<span>Logist</span></span>
-        </a>
-
-        <nav class="nav" id="nav" aria-label="Основное меню">
-            <a href="#about" class="nav__link">О нас</a>
-            <a href="#jobs" class="nav__link">Вакансии</a>
-            <a href="#contacts" class="nav__link">Контакты</a>
-            <a href="tel:88005553535" class="nav__phone nav__phone--mobile">8 (800) 555-35-35</a>
-        </nav>
-
-        <a href="tel:88005553535" class="nav__phone nav__phone--desktop">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/></svg>
-            8 (800) 555-35-35
-        </a>
-
-        <!-- Кнопка бургер-меню (видна только на мобильных) -->
-        <button class="burger" id="burger" type="button" aria-label="Открыть меню" aria-expanded="false" aria-controls="nav">
-            <span></span><span></span><span></span>
-        </button>
-    </div>
-</header>
+<?php include __DIR__ . '/inc/header.php'; ?>
 
 <main>
     <!-- ========== ГЕРОЙ-БЛОК ========== -->
@@ -128,6 +132,11 @@ $yandexMetrikaId = '';
                     <p class="feature__text">Форма, страховка, топливные карты — всё предоставляем</p>
                 </article>
             </div>
+            <p class="features__more">
+                Подробнее об условиях и оформлении — на странице
+                <a href="/o-kompanii/">«О компании и условия работы»</a>,
+                включая честное сравнение с Wildberries и Ozon.
+            </p>
         </div>
     </section>
 
@@ -219,16 +228,7 @@ $yandexMetrikaId = '';
 </main>
 
 <!-- ========== ФУТЕР ========== -->
-<footer class="footer" id="contacts">
-    <div class="container footer__inner">
-        <div class="footer__brand">
-            <span class="logo__text logo__text--light">Express<span>Logist</span></span>
-            <a href="tel:88005553535" class="footer__phone">8 (800) 555-35-35</a>
-        </div>
-        <p class="footer__copy">© 2026 ExpressLogist. Все права защищены</p>
-        <a href="#" class="footer__link">Политика конфиденциальности</a>
-    </div>
-</footer>
+<?php include __DIR__ . '/inc/footer.php'; ?>
 
 <!-- ========== ВСПЛЫВАЮЩЕЕ СООБЩЕНИЕ ОБ УСПЕХЕ ========== -->
 <div class="modal" id="successModal" role="dialog" aria-modal="true" aria-labelledby="successTitle" hidden>

@@ -1,0 +1,5 @@
+User-agent: *
+Disallow: /logs/
+Allow: /
+
+Sitemap: https://expresslogist.ru/sitemap.xml
