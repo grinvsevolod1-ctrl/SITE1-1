@@ -70,6 +70,7 @@ $related = [
     ['url' => '/uslugi/sbornye-gruzy/', 'title' => 'Сборные грузы (LTL)', 'desc' => 'Отгрузка заказов со склада по региону'],
     ['url' => '/uslugi/krupnogabaritnaya-dostavka/', 'title' => 'Крупногабаритная доставка', 'desc' => 'Приёмка и хранение негабаритных грузов'],
     ['url' => '/napravleniya/', 'title' => 'Направления по СНГ', 'desc' => 'Доставка со склада по 9 странам'],
+    ['url' => '/kalkulyator/', 'title' => 'Калькулятор доставки', 'desc' => 'Оцените стоимость перевозки онлайн'],
 ];
 
 require __DIR__ . '/../../inc/content-page.php';

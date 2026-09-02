@@ -124,7 +124,7 @@ require INC . '/header.php';
                                 <div class="faq">
                                     <?php foreach ($b['items'] as $f): ?>
                                     <div class="faq__item">
-                                        <button class="faq__q" type="button"><?php echo e($f['q']); ?></button>
+                                        <button class="faq__q" type="button" aria-expanded="false"><?php echo e($f['q']); ?></button>
                                         <div class="faq__a"><p><?php echo e($f['a']); ?></p></div>
                                     </div>
                                     <?php endforeach; ?>

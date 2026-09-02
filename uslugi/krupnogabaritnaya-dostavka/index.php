@@ -73,6 +73,7 @@ $related = [
     ['url' => '/uslugi/otdelnaya-mashina/', 'title' => 'Отдельная машина (FTL)', 'desc' => 'Прямая доставка целой фурой без догрузки'],
     ['url' => '/uslugi/sklad-i-fulfilment/', 'title' => 'Склад и фулфилмент', 'desc' => 'Хранение, комплектация и отгрузка заказов'],
     ['url' => '/napravleniya/', 'title' => 'Направления по СНГ', 'desc' => 'Маршруты и сроки по 9 странам региона'],
+    ['url' => '/kalkulyator/', 'title' => 'Калькулятор доставки', 'desc' => 'Оцените стоимость перевозки онлайн'],
 ];
 
 require __DIR__ . '/../../inc/content-page.php';

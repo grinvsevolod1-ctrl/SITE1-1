@@ -56,7 +56,9 @@ AddDefaultCharset UTF-8
     Header set X-Content-Type-Options "nosniff"
     Header set X-Frame-Options "SAMEORIGIN"
     Header set Referrer-Policy "strict-origin-when-cross-origin"
-    Header set Strict-Transport-Security "max-age=63072000" env=HTTPS
+    Header set Strict-Transport-Security "max-age=63072000; includeSubDomains" env=HTTPS
+    Header set Permissions-Policy "camera=(), microphone=(), geolocation=(), payment=()"
+    Header set X-XSS-Protection "0"
 </IfModule>
 
 # ---------- MIME для WebP ----------

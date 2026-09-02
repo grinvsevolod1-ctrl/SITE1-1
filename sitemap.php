@@ -21,6 +21,9 @@ foreach ($siloNav as $section) {
     }
 }
 
+/* Калькулятор стоимости — отдельная индексируемая страница */
+$urls[] = ['loc' => '/kalkulyator/', 'priority' => '0.7', 'freq' => 'monthly'];
+
 /* Самостоятельные страницы (кроме политики — она noindex) */
 foreach ($standaloneNav as $page) {
     if ($page['url'] === '/politika-konfidencialnosti/') {

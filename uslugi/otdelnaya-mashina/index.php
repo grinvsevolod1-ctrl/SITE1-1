@@ -68,6 +68,7 @@ $related = [
     ['url' => '/uslugi/sbornye-gruzy/', 'title' => 'Сборные грузы (LTL)', 'desc' => 'Когда груз меньше целой машины'],
     ['url' => '/uslugi/krupnogabaritnaya-dostavka/', 'title' => 'Крупногабаритная доставка', 'desc' => 'Негабарит и тяжеловесы отдельным транспортом'],
     ['url' => '/napravleniya/', 'title' => 'Направления по СНГ', 'desc' => 'Прямые маршруты фурами по региону'],
+    ['url' => '/kalkulyator/', 'title' => 'Калькулятор доставки', 'desc' => 'Оцените стоимость перевозки онлайн'],
 ];
 
 require __DIR__ . '/../../inc/content-page.php';

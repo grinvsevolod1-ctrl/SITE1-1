@@ -117,7 +117,117 @@
     document.querySelectorAll('.faq__q').forEach(function (btn) {
         btn.addEventListener('click', function () {
             var item = btn.closest('.faq__item');
-            if (item) item.classList.toggle('is-open');
+            if (!item) return;
+            var open = item.classList.toggle('is-open');
+            btn.setAttribute('aria-expanded', open ? 'true' : 'false');
         });
     });
+
+    /* ---------------- Калькулятор стоимости ---------------- */
+    var calcForm = document.getElementById('calc-form');
+
+    if (calcForm) {
+        // Ориентировочные ставки (рубли). Точную цену считает менеджер.
+        var RATES = {
+            ltl:       { perKgKm: 0.06, base: 3000, min: 3000, density: 250, label: 'Сборный груз (LTL)' },
+            ftl:       { perKm: 55, base: 5000, min: 25000, label: 'Отдельная машина (FTL)' },
+            oversized: { perKm: 88, base: 20000, min: 45000, label: 'Крупногабарит / негабарит' }
+        };
+
+        var errEl    = document.getElementById('calc-error');
+        var placeholder = document.getElementById('calc-placeholder');
+        var output   = document.getElementById('calc-output');
+        var priceEl  = document.getElementById('calc-price');
+        var breakdownEl = document.getElementById('calc-breakdown');
+        var serviceEl = document.getElementById('c-service');
+        var cargoRow = calcForm.querySelector('[data-role="cargo"]');
+
+        function fmt(n) {
+            return Math.round(n).toLocaleString('ru-RU') + ' ₽';
+        }
+
+        function showError(msg) {
+            if (!errEl) return;
+            errEl.textContent = msg;
+            errEl.hidden = false;
+        }
+        function clearError() { if (errEl) errEl.hidden = true; }
+
+        // Вес/объём нужны только для сборных грузов
+        function syncCargoVisibility() {
+            if (!cargoRow) return;
+            cargoRow.style.display = serviceEl.value === 'ltl' ? '' : 'none';
+        }
+        serviceEl.addEventListener('change', syncCargoVisibility);
+        syncCargoVisibility();
+
+        calcForm.addEventListener('submit', function (evt) {
+            evt.preventDefault();
+            clearError();
+
+            var service = serviceEl.value;
+            var distance = parseFloat(document.getElementById('c-distance').value);
+            var rate = RATES[service];
+
+            if (!distance || distance <= 0) {
+                showError('Укажите расстояние в километрах.');
+                return;
+            }
+
+            var rows = [];
+            var total;
+
+            if (service === 'ltl') {
+                var weight = parseFloat(document.getElementById('c-weight').value);
+                var volume = parseFloat(document.getElementById('c-volume').value) || 0;
+                if (!weight || weight <= 0) {
+                    showError('Для сборного груза укажите вес в килограммах.');
+                    return;
+                }
+                var volumetric = volume * rate.density;
+                var chargeable = Math.max(weight, volumetric);
+                total = rate.base + chargeable * rate.perKgKm * (distance / 1000);
+                total = Math.max(total, rate.min);
+
+                rows.push(['Тип перевозки', rate.label]);
+                rows.push(['Расстояние', Math.round(distance).toLocaleString('ru-RU') + ' км']);
+                rows.push(['Расчётный вес', Math.round(chargeable).toLocaleString('ru-RU') + ' кг' + (volumetric > weight ? ' (по объёму)' : '')]);
+                if (chargeable > 5000) {
+                    rows.push(['Рекомендация', 'При таком весе выгоднее отдельная машина (FTL)']);
+                }
+            } else {
+                total = rate.base + distance * rate.perKm;
+                total = Math.max(total, rate.min);
+                rows.push(['Тип перевозки', rate.label]);
+                rows.push(['Расстояние', Math.round(distance).toLocaleString('ru-RU') + ' км']);
+                if (service === 'oversized') {
+                    rows.push(['Учтено', 'Спецтранспорт, разрешения и сопровождение']);
+                }
+            }
+
+            // Диапазон ±12%
+            var low = total * 0.88;
+            var high = total * 1.12;
+            priceEl.textContent = fmt(low) + ' — ' + fmt(high);
+
+            breakdownEl.innerHTML = '';
+            rows.forEach(function (r) {
+                var li = document.createElement('li');
+                var k = document.createElement('span');
+                k.textContent = r[0];
+                var v = document.createElement('b');
+                v.textContent = r[1];
+                li.appendChild(k);
+                li.appendChild(v);
+                breakdownEl.appendChild(li);
+            });
+
+            if (placeholder) placeholder.hidden = true;
+            if (output) output.hidden = false;
+
+            // Цель в аналитику
+            if (typeof window.ym === 'function' && window.YM_ID) window.ym(window.YM_ID, 'reachGoal', 'calc_use');
+            if (typeof window.gtag === 'function') window.gtag('event', 'calc_use', { event_category: 'calculator', event_label: service });
+        });
+    }
 })();

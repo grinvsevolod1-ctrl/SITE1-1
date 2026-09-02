@@ -31,6 +31,7 @@ $year = date('Y');
             <nav class="footer__col" aria-label="Компания">
                 <p class="footer__heading">Компания</p>
                 <ul class="footer__list">
+                    <li><a href="/kalkulyator/" class="footer__link">Калькулятор доставки</a></li>
                     <?php foreach ($standaloneNav as $page): ?>
                     <li><a href="<?php echo e($page['url']); ?>" class="footer__link"><?php echo e($page['title']); ?></a></li>
                     <?php endforeach; ?>

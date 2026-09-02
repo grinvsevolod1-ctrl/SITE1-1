@@ -70,6 +70,7 @@ $related = [
     ['url' => '/uslugi/krupnogabaritnaya-dostavka/', 'title' => 'Крупногабаритная доставка', 'desc' => 'Негабарит, тяжеловесы и проектные грузы'],
     ['url' => '/uslugi/otdelnaya-mashina/', 'title' => 'Отдельная машина (FTL)', 'desc' => 'Когда объём вырос до целой фуры'],
     ['url' => '/napravleniya/', 'title' => 'Направления по СНГ', 'desc' => 'Регулярные сборные маршруты по региону'],
+    ['url' => '/kalkulyator/', 'title' => 'Калькулятор доставки', 'desc' => 'Оцените стоимость перевозки онлайн'],
 ];
 
 require __DIR__ . '/../../inc/content-page.php';

@@ -48,10 +48,11 @@ $crumbs = [
             <div class="cta-band mt-32">
                 <div class="cta-band__text">
                     <h2>Не нашли нужную услугу?</h2>
-                    <p>Расскажите о задаче — подберём схему доставки под ваш груз и маршрут.</p>
+                    <p>Расскажите о задаче — подберём схему доставки под ваш груз и маршрут. Или прикиньте бюджет сами в онлайн-калькуляторе.</p>
                 </div>
                 <div class="cta-band__actions">
                     <a href="/#form" class="btn btn--accent">Получить расчёт</a>
+                    <a href="/kalkulyator/" class="btn btn--outline-light">Калькулятор доставки</a>
                 </div>
             </div>
         </div>
