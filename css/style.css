@@ -321,8 +321,10 @@ h1, h2, h3, h4 { font-family: var(--font-head); font-weight: 800; line-height: 1
    Раньше эти обёртки не имели правил, из-за чего контент попадал в узкую колонку 260px
    и всё «схлопывалось». Здесь: контент — широкая колонка слева, сайдбар — 300px справа. */
 .layout:has(.layout__main) { grid-template-columns: minmax(0, 1fr) 300px; }
-.layout__main { min-width: 0; }
-.layout__aside { min-width: 0; }
+/* Надёжный фолбэк без :has() — на случай, когда :has не поддерживается.
+   Явно задаём колонки самим детям: контент — широкая колонка 1, сайдбар — узкая 2. */
+.layout__main { min-width: 0; grid-column: 1; }
+.layout__aside { min-width: 0; grid-column: 2; width: 300px; justify-self: end; }
 .article { max-width: 760px; }
 .article--narrow { max-width: 820px; }
 .article h2 { font-size: 28px; color: var(--navy); margin: 40px 0 16px; }
@@ -409,7 +411,9 @@ table.data tr:last-child td { border-bottom: none; }
     .layout:has(.layout__main) { grid-template-columns: 1fr; }
     /* Контент выше навигации по разделу */
     .layout > .sidebar { order: 2; }
-    .layout__aside { order: 2; }
+    /* Сброс явных колонок из десктопного фолбэка — иначе на мобиле дети остаются в колонке 2 */
+    .layout__main { grid-column: auto; }
+    .layout__aside { order: 2; grid-column: auto; width: 100%; justify-self: stretch; }
     .sidebar { position: static; grid-template-columns: 1fr; }
 }
 
