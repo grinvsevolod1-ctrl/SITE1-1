@@ -1,0 +1,56 @@
+# ExpressLogist — настройки Apache
+# Требуется: mod_rewrite, mod_deflate, mod_expires, mod_headers
+
+# ---------- Главная страница ----------
+DirectoryIndex index.php
+
+# ---------- Принудительный HTTPS ----------
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteCond %{HTTPS} !=on
+    RewriteRule ^(.*)$ https://%{HTTP_HOST}/$1 [R=301,L]
+</IfModule>
+
+# ---------- Запрет доступа к папке logs и служебным файлам ----------
+# (сам файл logs/leads.txt дополнительно защищён logs/.htaccess)
+<IfModule mod_rewrite.c>
+    RewriteRule ^logs(/|$) - [F,L]
+</IfModule>
+
+<FilesMatch "^\.(htaccess|htpasswd|git|env)">
+    Require all denied
+</FilesMatch>
+
+# Запрет просмотра содержимого директорий
+Options -Indexes
+
+# ---------- Кодировка ----------
+AddDefaultCharset UTF-8
+
+# ---------- Сжатие (gzip) ----------
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html text/plain text/css text/javascript
+    AddOutputFilterByType DEFLATE application/javascript application/json image/svg+xml
+</IfModule>
+
+# ---------- Кэширование статики ----------
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresByType image/webp  "access plus 1 year"
+    ExpiresByType image/jpeg  "access plus 1 year"
+    ExpiresByType image/png   "access plus 1 year"
+    ExpiresByType image/svg+xml "access plus 1 year"
+    ExpiresByType text/css    "access plus 1 month"
+    ExpiresByType application/javascript "access plus 1 month"
+</IfModule>
+
+# ---------- Заголовки безопасности ----------
+<IfModule mod_headers.c>
+    Header set X-Content-Type-Options "nosniff"
+    Header set X-Frame-Options "SAMEORIGIN"
+    Header set Referrer-Policy "strict-origin-when-cross-origin"
+    Header set Strict-Transport-Security "max-age=63072000" env=HTTPS
+</IfModule>
+
+# ---------- MIME для WebP ----------
+AddType image/webp .webp
