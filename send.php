@@ -56,6 +56,14 @@ $to      = clean_text((string) ($_POST['to'] ?? ''));
 $service = clean_text((string) ($_POST['service'] ?? ''));
 $comment = clean_text((string) ($_POST['comment'] ?? ''));
 
+// Тип формы: 'vacancy' — отклик на вакансию водителя, иначе — заявка на расчёт.
+$formType   = clean_text((string) ($_POST['form_type'] ?? ''));
+$isVacancy  = $formType === 'vacancy';
+$city       = clean_text((string) ($_POST['city'] ?? ''));
+$experience = clean_text((string) ($_POST['experience'] ?? ''));
+$category   = clean_text((string) ($_POST['category'] ?? ''));
+$vehicle    = clean_text((string) ($_POST['vehicle'] ?? ''));
+
 // Телефон: оставляем только цифры, 8XXXXXXXXXX -> 7XXXXXXXXXX
 $phone = preg_replace('/\D/', '', (string) ($_POST['phone'] ?? ''));
 if (strlen($phone) === 11 && $phone[0] === '8') {
@@ -112,17 +120,31 @@ if (!is_dir($logDir) && !mkdir($logDir, 0755, true)) {
     respond(['success' => false, 'message' => 'Не удалось сохранить заявку. Попробуйте позже.'], 500);
 }
 
-$line = sprintf(
-    "[%s] | Имя: %s | Тел: %s | Компания: %s | Откуда: %s | Куда: %s | Груз: %s | Комментарий: %s\n",
-    date('Y-m-d H:i:s'),
-    $name,
-    $phone,
-    $company !== '' ? $company : '—',
-    $from !== '' ? $from : '—',
-    $to !== '' ? $to : '—',
-    $service !== '' ? $service : '—',
-    $comment !== '' ? $comment : '—'
-);
+if ($isVacancy) {
+    $line = sprintf(
+        "[%s] [ВАКАНСИЯ ВОДИТЕЛЯ] | Имя: %s | Тел: %s | Город: %s | Стаж: %s | Категории: %s | Свой транспорт: %s | Комментарий: %s\n",
+        date('Y-m-d H:i:s'),
+        $name,
+        $phone,
+        $city !== '' ? $city : '—',
+        $experience !== '' ? $experience : '—',
+        $category !== '' ? $category : '—',
+        $vehicle !== '' ? $vehicle : '—',
+        $comment !== '' ? $comment : '—'
+    );
+} else {
+    $line = sprintf(
+        "[%s] | Имя: %s | Тел: %s | Компания: %s | Откуда: %s | Куда: %s | Груз: %s | Комментарий: %s\n",
+        date('Y-m-d H:i:s'),
+        $name,
+        $phone,
+        $company !== '' ? $company : '—',
+        $from !== '' ? $from : '—',
+        $to !== '' ? $to : '—',
+        $service !== '' ? $service : '—',
+        $comment !== '' ? $comment : '—'
+    );
+}
 
 // LOCK_EX защищает файл от порчи при одновременных записях
 $written = file_put_contents($logFile, $line, FILE_APPEND | LOCK_EX);
