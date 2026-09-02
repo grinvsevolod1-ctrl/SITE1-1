@@ -65,3 +65,5 @@ $year = date('Y');
     <p>Мы используем файлы cookie и системы аналитики для работы сайта и улучшения сервиса. Оставаясь на сайте, вы соглашаетесь с <a href="/politika-konfidencialnosti/">политикой конфиденциальности</a>.</p>
     <button type="button" class="btn btn--accent" id="cookie-accept">Принять</button>
 </div>
+
+<script src="<?php echo asset('js/script.js', $assetsPrefix ?? ''); ?>" defer></script>

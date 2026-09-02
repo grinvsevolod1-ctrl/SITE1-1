@@ -97,3 +97,19 @@ if (!function_exists('e')) {
         return htmlspecialchars((string) $value, ENT_QUOTES, 'UTF-8');
     }
 }
+
+/* -------------------------------------------------------------------------
+   Хелпер версионирования статики (cache-busting).
+   Возвращает путь к файлу с параметром ?v=<время изменения файла>, чтобы
+   браузеры и CDN подтягивали свежую версию сразу после деплоя, не завися
+   от 30-дневного кэша. Пример: asset('css/style.css', $assetsPrefix).
+   ------------------------------------------------------------------------- */
+if (!function_exists('asset')) {
+    function asset(string $relPath, string $prefix = ''): string
+    {
+        $root = dirname(INC);                 // корень проекта (папка над inc/)
+        $full = $root . '/' . ltrim($relPath, '/');
+        $ver  = is_file($full) ? (string) filemtime($full) : (string) time();
+        return e($prefix . $relPath) . '?v=' . e($ver);
+    }
+}

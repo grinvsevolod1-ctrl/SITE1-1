@@ -232,6 +232,6 @@ require __DIR__ . '/head.php';
     </div>
 </footer>
 
-<script src="<?php echo e($assetsPrefix); ?>js/script.js" defer></script>
+    <script src="<?php echo asset('js/script.js', $assetsPrefix); ?>" defer></script>
 </body>
 </html>

@@ -111,7 +111,7 @@ $globalLd = json_encode(
     <link rel="preload" as="image" href="<?php echo e($assetsPrefix); ?>img/hero-freight.webp" type="image/webp">
     <?php endif; ?>
 
-    <link rel="stylesheet" href="<?php echo e($assetsPrefix); ?>css/style.css">
+    <link rel="stylesheet" href="<?php echo asset('css/style.css', $assetsPrefix); ?>">
 
     <!-- Глобальная разметка Organization + WebSite -->
     <script type="application/ld+json"><?php echo $globalLd; ?></script>
