@@ -124,9 +124,12 @@ $record = [
     'iph'      => $ipHash,
 ];
 
-/* Пишем JSONL с блокировкой. Папка logs/ уже доступна на запись. */
+/* Пишем JSONL с блокировкой. Папку logs/ создаём при отсутствии (как send.php). */
 $logDir = __DIR__ . '/../logs';
 $logFile = $logDir . '/analytics.jsonl';
+if (!is_dir($logDir)) {
+    @mkdir($logDir, 0775, true);
+}
 if (is_dir($logDir) && is_writable($logDir)) {
     $line = json_encode($record, JSON_UNESCAPED_UNICODE) . "\n";
     @file_put_contents($logFile, $line, FILE_APPEND | LOCK_EX);
