@@ -11,10 +11,14 @@ DirectoryIndex index.php
     RewriteRule ^(.*)$ https://%{HTTP_HOST}/$1 [R=301,L]
 </IfModule>
 
-# ---------- Запрет доступа к папке logs и служебным файлам ----------
-# (сам файл logs/leads.txt дополнительно защищён logs/.htaccess)
+# ---------- Карта сайта: /sitemap.xml обслуживается sitemap.php ----------
 <IfModule mod_rewrite.c>
-    RewriteRule ^logs(/|$) - [F,L]
+    RewriteRule ^sitemap\.xml$ sitemap.php [L]
+</IfModule>
+
+# ---------- Запрет доступа к служебным папкам и логам ----------
+<IfModule mod_rewrite.c>
+    RewriteRule ^(inc|logs)(/|$) - [F,L]
 </IfModule>
 
 <FilesMatch "^\.(htaccess|htpasswd|git|env)">

@@ -1,5 +1,6 @@
 User-agent: *
-Disallow: /logs/
 Allow: /
+Disallow: /inc/
+Disallow: /send.php
 
 Sitemap: https://expresslogist.ru/sitemap.xml

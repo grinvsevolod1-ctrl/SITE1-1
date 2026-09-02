@@ -1,98 +1,125 @@
 <?php
 /**
- * Страница «Контакты» — вне силосов, единая точка связи для соискателей и партнёров.
+ * Страница «Контакты» — единая точка связи для клиентов (заявки на доставку),
+ * водителей и партнёров по всему СНГ.
  */
 
 require __DIR__ . '/../inc/config.php';
+require __DIR__ . '/../inc/nav-data.php';
 
-$pageTitle = 'Контакты — ExpressLogist';
-$pageDescription = 'Свяжитесь с ExpressLogist: телефон горячей линии, форма заявки для соискателей и адрес центрального офиса. Ответим в течение 15 минут.';
-$canonical = $baseUrl . '/kontakty/';
+$pageTitle       = 'Контакты — ' . $siteName;
+$pageDescription = 'Свяжитесь с ' . $siteName . ': отдел логистики и приём заявок на грузоперевозки по СНГ, отдел по работе с водителями, адрес терминала. Рассчитаем перевозку за 15 минут.';
+$pageUrl         = '/kontakty/';
+$assetsPrefix    = '../';
+$navActive       = '/kontakty/';
 
-$breadcrumbs = [
-    ['label' => 'Главная', 'url' => '/'],
-    ['label' => 'Контакты', 'url' => null],
+$crumbs = [
+    ['title' => 'Главная', 'url' => '/'],
+    ['title' => 'Контакты', 'url' => null],
 ];
+
+// JSON-LD: организация с контактами
+$extraHead = '<script type="application/ld+json">' . json_encode([
+    '@context' => 'https://schema.org',
+    '@type' => 'MovingCompany',
+    'name' => $siteName,
+    'telephone' => '+' . preg_replace('/\D/', '', $phoneHref),
+    'email' => $email,
+    'url' => $baseUrl,
+    'address' => [
+        '@type' => 'PostalAddress',
+        'streetAddress' => $address['street'],
+        'addressLocality' => $address['city'],
+        'postalCode' => $address['zip'],
+        'addressCountry' => $address['country'],
+    ],
+], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) . '</script>';
+
+require __DIR__ . '/../inc/head.php';
+require __DIR__ . '/../inc/header.php';
 ?>
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title><?php echo htmlspecialchars($pageTitle, ENT_QUOTES, 'UTF-8'); ?></title>
-    <meta name="description" content="<?php echo htmlspecialchars($pageDescription, ENT_QUOTES, 'UTF-8'); ?>">
-    <meta name="theme-color" content="#1A73E8">
-    <link rel="canonical" href="<?php echo htmlspecialchars($canonical, ENT_QUOTES, 'UTF-8'); ?>">
-
-    <meta property="og:type" content="website">
-    <meta property="og:locale" content="ru_RU">
-    <meta property="og:site_name" content="ExpressLogist">
-    <meta property="og:title" content="<?php echo htmlspecialchars($pageTitle, ENT_QUOTES, 'UTF-8'); ?>">
-    <meta property="og:description" content="<?php echo htmlspecialchars($pageDescription, ENT_QUOTES, 'UTF-8'); ?>">
-    <meta property="og:url" content="<?php echo htmlspecialchars($canonical, ENT_QUOTES, 'UTF-8'); ?>">
-    <meta property="og:image" content="<?php echo htmlspecialchars($baseUrl, ENT_QUOTES, 'UTF-8'); ?>/img/hero-courier.webp">
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/css/style.css">
-</head>
-<body>
-
-<?php $isHome = false; include __DIR__ . '/../inc/header.php'; ?>
-
-<?php include __DIR__ . '/../inc/breadcrumbs.php'; ?>
-
-<main>
-    <section class="article section">
+<main id="main">
+    <section class="page-hero">
         <div class="container">
-            <h1 class="hero__title" style="font-size: 40px; text-align: center;">Контакты</h1>
-            <p class="section__subtitle">
-                Вопросы по вакансиям, оформлению или сотрудничеству — звоните на горячую линию
-                или оставьте заявку, менеджер свяжется с вами в течение 15 минут.
-            </p>
+            <h1>Контакты</h1>
+            <p>Рассчитываем стоимость перевозки за 15 минут в рабочее время. Отдельные линии для клиентов, водителей и партнёров.</p>
+        </div>
+    </section>
 
-            <div class="city-stats" style="max-width: 900px; margin: 48px auto 0; grid-template-columns: repeat(3, 1fr);">
-                <div class="city-stat">
-                    <div class="city-stat__value" style="font-size: 22px;">8 (800) 555-35-35</div>
-                    <div class="city-stat__label">Горячая линия, звонок бесплатный</div>
+    <div class="container"><?php require __DIR__ . '/../inc/breadcrumbs.php'; ?></div>
+
+    <section class="section section--tight">
+        <div class="container">
+            <div class="contact-grid">
+                <div class="contact-card">
+                    <div class="contact-card__label">Отдел логистики — заявки на перевозку</div>
+                    <a class="contact-card__value" href="tel:<?php echo e($phoneHref); ?>" data-goal="phone_click"><?php echo e($phoneDisplay); ?></a>
+                    <p class="contact-card__note">Бесплатно по всему СНГ. Расчёт сборных и отдельных машин, крупногабарит.</p>
                 </div>
-                <div class="city-stat">
-                    <div class="city-stat__value" style="font-size: 22px;">info@expresslogist.ru</div>
-                    <div class="city-stat__label">Почта для соискателей и партнёров</div>
+                <div class="contact-card">
+                    <div class="contact-card__label">Электронная почта</div>
+                    <a class="contact-card__value" href="mailto:<?php echo e($email); ?>"><?php echo e($email); ?></a>
+                    <p class="contact-card__note">Заявки со спецификацией, документы, договоры, бухгалтерия.</p>
                 </div>
-                <div class="city-stat">
-                    <div class="city-stat__value" style="font-size: 22px;">Пн–Вс, 8:00–22:00</div>
-                    <div class="city-stat__label">Режим работы горячей линии</div>
+                <div class="contact-card">
+                    <div class="contact-card__label">Отдел по работе с водителями</div>
+                    <a class="contact-card__value" href="/voditelyam/">Раздел «Водителям»</a>
+                    <p class="contact-card__note">Набор дальнобойщиков, городских водителей и владельцев своего авто.</p>
+                </div>
+                <div class="contact-card">
+                    <div class="contact-card__label">Режим работы</div>
+                    <div class="contact-card__value contact-card__value--sm">Пн–Пт 8:00–20:00, Сб 9:00–18:00</div>
+                    <p class="contact-card__note">Диспетчерская и мониторинг грузов — круглосуточно, 24/7.</p>
                 </div>
             </div>
 
-            <div class="article__body" style="max-width: 760px; margin: 48px auto 0;">
-                <h2>Центральный офис</h2>
-                <p>г. Москва, ул. Складочная, д. 6, стр. 1, БЦ «Северный», 4 этаж</p>
+            <div class="layout">
+                <article class="article">
+                    <h2>Центральный офис и терминал</h2>
+                    <p><?php echo e($address['zip'] . ', г. ' . $address['city'] . ', ' . $address['street']); ?></p>
+                    <p>
+                        Головной терминал входит в сеть из 140+ складских комплексов и перегрузочных
+                        хабов в 9 странах СНГ. Приём и выдача грузов, ответственное хранение,
+                        кросс-докинг и таможенное оформление — на одной площадке.
+                    </p>
 
-                <h2>Вакансии по городам</h2>
-                <p>
-                    Подробные условия работы, доход и районы для 8 крупнейших городов присутствия —
-                    на странице <a href="/vakansii/">«Вакансии по городам»</a>. Работаем в 150+
-                    городах России — если вашего города нет в списке, уточните условия по телефону.
-                </p>
+                    <h2>Направления перевозок</h2>
+                    <p>
+                        Возим по всей России и между странами СНГ: Беларусь, Казахстан, Армения,
+                        Кыргызстан, Узбекистан, Азербайджан, Таджикистан, Молдова. Условия, сроки
+                        и таможенные нюансы по каждой стране — в разделе
+                        <a href="/napravleniya/">«Направления»</a>.
+                    </p>
 
-                <h2>Для СМИ и партнёров</h2>
-                <p>
-                    По вопросам сотрудничества, франшизы и партнёрских программ пишите на
-                    info@expresslogist.ru — ответим в течение одного рабочего дня.
-                </p>
+                    <h2>Для водителей</h2>
+                    <p>
+                        Набираем дальнобойщиков на межгород и международные рейсы, городских
+                        водителей и владельцев собственных фур. Условия, ставки и требования —
+                        в разделе <a href="/voditelyam/">«Водителям»</a>.
+                    </p>
 
-                <div class="article__cta">
-                    <p>Хотите стать курьером ExpressLogist?</p>
-                    <a href="/#form" class="btn btn--accent">Оставить заявку</a>
-                </div>
+                    <h2>Партнёрам и перевозчикам</h2>
+                    <p>
+                        По вопросам подключения транспорта, агентских и партнёрских программ
+                        пишите на <a href="mailto:<?php echo e($email); ?>"><?php echo e($email); ?></a> —
+                        ответим в течение одного рабочего дня.
+                    </p>
+
+                    <div class="cta-band" style="margin-top:8px">
+                        <div class="cta-band__text">
+                            <h2>Нужно перевезти груз?</h2>
+                            <p>Оставьте заявку — рассчитаем маршрут, сроки и стоимость.</p>
+                        </div>
+                        <div class="cta-band__actions">
+                            <a href="/#form" class="btn btn--accent">Рассчитать перевозку</a>
+                            <a href="tel:<?php echo e($phoneHref); ?>" class="btn btn--outline-light"><?php echo e($phoneDisplay); ?></a>
+                        </div>
+                    </div>
+                </article>
+
+                <?php $sidebarSection = null; require __DIR__ . '/../inc/sidebar.php'; ?>
             </div>
         </div>
     </section>
 </main>
-
-<?php include __DIR__ . '/../inc/footer.php'; ?>
-</body>
-</html>
+<?php require __DIR__ . '/../inc/footer.php'; ?>
