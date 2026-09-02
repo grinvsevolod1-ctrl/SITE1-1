@@ -21,7 +21,7 @@ define('INC', __DIR__);
    ------------------------------------------------------------------------- */
 
 /** Домен сайта без слэша в конце. Замените на свой перед публикацией. */
-$baseUrl = 'https://expresslogist.com';
+$baseUrl = 'https://expresslogists.com';
 
 $siteName   = 'ExpressLogist';
 $siteSlogan = 'Крупногабаритная доставка для бизнеса по всему СНГ';
@@ -30,7 +30,7 @@ $siteSlogan = 'Крупногабаритная доставка для бизн
 $phoneDisplay = '8 (800) 555-35-35';
 $phoneHref    = '88005553535';
 
-$email = 'info@expresslogist.com';
+$email = 'info@expresslogists.com';
 
 /* Адрес головного офиса (для schema.org и страницы контактов) */
 $address = [
