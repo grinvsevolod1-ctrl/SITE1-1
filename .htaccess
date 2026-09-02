@@ -4,6 +4,9 @@
 # ---------- Главная страница ----------
 DirectoryIndex index.php
 
+# ---------- Страница 404 ----------
+ErrorDocument 404 /404.php
+
 # ---------- Принудительный HTTPS ----------
 <IfModule mod_rewrite.c>
     RewriteEngine On

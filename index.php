@@ -59,6 +59,11 @@ require __DIR__ . '/inc/header.php';
                 <p class="lead-card__title">Заявка на расчёт</p>
                 <p class="lead-card__note">Ответим в течение 15 минут в рабочее время</p>
                 <form id="lead-form" action="/send.php" method="post" novalidate>
+                    <!-- Honeypot: скрытое поле-ловушка для ботов. Люди его не заполняют. -->
+                    <div class="hp-field" aria-hidden="true">
+                        <label for="f-website">Не заполняйте это поле</label>
+                        <input type="text" id="f-website" name="website" tabindex="-1" autocomplete="off">
+                    </div>
                     <div class="field">
                         <label class="field__label" for="f-name">Ваше имя *</label>
                         <input class="input" type="text" id="f-name" name="name" autocomplete="name" required>

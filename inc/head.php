@@ -30,6 +30,10 @@ $canonical       = $baseUrl . $pageUrl;
     <meta name="theme-color" content="#0B1F3A">
     <link rel="canonical" href="<?php echo e($canonical); ?>">
 
+    <!-- Иконки -->
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+
     <!-- Open Graph -->
     <meta property="og:type" content="website">
     <meta property="og:locale" content="ru_RU">
@@ -37,6 +41,15 @@ $canonical       = $baseUrl . $pageUrl;
     <meta property="og:title" content="<?php echo e($pageTitle); ?>">
     <meta property="og:description" content="<?php echo e($pageDescription); ?>">
     <meta property="og:url" content="<?php echo e($canonical); ?>">
+    <meta property="og:image" content="<?php echo e($baseUrl); ?>/img/og-cover.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="<?php echo e($pageTitle); ?>">
+    <meta name="twitter:description" content="<?php echo e($pageDescription); ?>">
+    <meta name="twitter:image" content="<?php echo e($baseUrl); ?>/img/og-cover.png">
 
     <!-- Шрифты: Manrope (заголовки) + Inter (текст) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
