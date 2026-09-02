@@ -105,7 +105,7 @@ $host = preg_replace('#^https?://#', '', $baseUrl);
                 <h2>6. Ответственность сторон</h2>
                 <p>
                     Стороны несут ответственность за неисполнение или ненадлежащее исполнение
-                    обязательств в соответствии с законодательством Российской Федерации, в том числе
+                    обязательств в ��оответствии с законодательством Российской Федерации, в том числе
                     Федеральным законом «О транспортно-экспедиционной деятельности». Исполнитель не
                     несёт ответственности за последствия, вызванные предоставлением Заказчиком
                     недостоверных сведений о грузе.
@@ -126,18 +126,23 @@ $host = preg_replace('#^https?://#', '', $baseUrl);
                 </p>
 
                 <h2>9. Реквизиты Исполнителя</h2>
-                <?php if (!empty($legal)): ?>
                 <ul class="list">
-                    <li><?php echo e($legal['name']); ?></li>
-                    <li>ИНН <?php echo e($legal['inn']); ?>, ОГРН <?php echo e($legal['ogrn']); ?></li>
-                    <li>Адрес: <?php echo e($legal['legalAddr']); ?></li>
+                    <?php if (!empty($legal['name'])): ?><li><?php echo e($legal['name']); ?></li><?php endif; ?>
+                    <?php if (!empty($legal['inn']) && !empty($legal['ogrn'])): ?>
+                        <li>ИНН <?php echo e($legal['inn']); ?>, ОГРН <?php echo e($legal['ogrn']); ?></li>
+                    <?php elseif (!empty($legal['inn'])): ?>
+                        <li>ИНН <?php echo e($legal['inn']); ?></li>
+                    <?php elseif (!empty($legal['ogrn'])): ?>
+                        <li>ОГРН <?php echo e($legal['ogrn']); ?></li>
+                    <?php endif; ?>
+                    <?php if (!empty($legal['legalAddr'])): ?><li>Адрес: <?php echo e($legal['legalAddr']); ?></li><?php endif; ?>
                     <li>Телефон: <a href="tel:<?php echo e($phoneHref); ?>"><?php echo e($phoneDisplay); ?></a></li>
                     <li>E-mail: <a href="mailto:<?php echo e($email); ?>"><?php echo e($email); ?></a></li>
                 </ul>
-                <?php else: ?>
+                <?php if (empty($legal['inn']) && empty($legal['ogrn'])): ?>
                 <p>
-                    Реквизиты Исполнителя предоставляются при согласовании заявки и указываются
-                    в договоре и первичных документах.
+                    Полные банковские и регистрационные реквизиты Исполнителя предоставляются
+                    при согласовании заявки и указываются в договоре и первичных документах.
                 </p>
                 <?php endif; ?>
             </article>

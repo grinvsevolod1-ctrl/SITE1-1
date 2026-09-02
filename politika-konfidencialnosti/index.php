@@ -52,15 +52,19 @@ $host = preg_replace('#^https?://#', '', $baseUrl);
                     обработки персональных данных и меры по обеспечению их безопасности,
                     принимаемые Оператором.
                 </p>
-                <?php if (!empty($legal)): ?>
                 <p><strong>Оператор персональных данных:</strong></p>
                 <ul class="list">
-                    <li><?php echo e($legal['name']); ?></li>
-                    <li>ИНН <?php echo e($legal['inn']); ?>, ОГРН <?php echo e($legal['ogrn']); ?></li>
-                    <li>Адрес: <?php echo e($legal['legalAddr']); ?></li>
+                    <?php if (!empty($legal['name'])): ?><li><?php echo e($legal['name']); ?></li><?php endif; ?>
+                    <?php if (!empty($legal['inn']) && !empty($legal['ogrn'])): ?>
+                        <li>ИНН <?php echo e($legal['inn']); ?>, ОГРН <?php echo e($legal['ogrn']); ?></li>
+                    <?php elseif (!empty($legal['inn'])): ?>
+                        <li>ИНН <?php echo e($legal['inn']); ?></li>
+                    <?php elseif (!empty($legal['ogrn'])): ?>
+                        <li>ОГРН <?php echo e($legal['ogrn']); ?></li>
+                    <?php endif; ?>
+                    <?php if (!empty($legal['legalAddr'])): ?><li>Адрес: <?php echo e($legal['legalAddr']); ?></li><?php endif; ?>
                     <li>E-mail: <a href="mailto:<?php echo e($email); ?>"><?php echo e($email); ?></a></li>
                 </ul>
-                <?php endif; ?>
 
                 <h2>2. Какие данные мы собираем</h2>
                 <p>При заполнении формы заявки пользователь предоставляет следующие данные:</p>

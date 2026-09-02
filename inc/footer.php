@@ -41,10 +41,16 @@ $year = date('Y');
             </nav>
         </div>
 
-        <?php if (!empty($legal)): ?>
+        <?php
+        // Собираем только заполненные реквизиты — пустые поля не выводятся.
+        $legalParts = [];
+        if (!empty($legal['name']))  { $legalParts[] = e($legal['name']); }
+        if (!empty($legal['inn']))   { $legalParts[] = 'ИНН ' . e($legal['inn']); }
+        if (!empty($legal['ogrn']))  { $legalParts[] = 'ОГРН ' . e($legal['ogrn']); }
+        ?>
+        <?php if ($legalParts || !empty($legal['legalAddr'])): ?>
         <p class="footer__legal">
-            <?php echo e($legal['name']); ?> · ИНН <?php echo e($legal['inn']); ?> · ОГРН <?php echo e($legal['ogrn']); ?><br>
-            <?php echo e($legal['legalAddr']); ?>
+            <?php echo implode(' · ', $legalParts); ?><?php if ($legalParts && !empty($legal['legalAddr'])): ?><br><?php endif; ?><?php if (!empty($legal['legalAddr'])): ?><?php echo e($legal['legalAddr']); ?><?php endif; ?>
         </p>
         <?php endif; ?>
 

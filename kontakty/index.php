@@ -105,13 +105,13 @@ require __DIR__ . '/../inc/header.php';
                         ответим в течение одного рабочего дня.
                     </p>
 
-                    <?php if (!empty($legal)): ?>
+                    <?php if (!empty($legal['name']) || !empty($legal['inn']) || !empty($legal['ogrn']) || !empty($legal['legalAddr'])): ?>
                     <h2>Реквизиты</h2>
                     <ul class="req-list">
-                        <li><span>Наименование</span><b><?php echo e($legal['name']); ?></b></li>
-                        <li><span>ИНН</span><b><?php echo e($legal['inn']); ?></b></li>
-                        <li><span>ОГРН</span><b><?php echo e($legal['ogrn']); ?></b></li>
-                        <li><span>Юридический адрес</span><b><?php echo e($legal['legalAddr']); ?></b></li>
+                        <?php if (!empty($legal['name'])): ?><li><span>Наименование</span><b><?php echo e($legal['name']); ?></b></li><?php endif; ?>
+                        <?php if (!empty($legal['inn'])): ?><li><span>ИНН</span><b><?php echo e($legal['inn']); ?></b></li><?php endif; ?>
+                        <?php if (!empty($legal['ogrn'])): ?><li><span>ОГРН</span><b><?php echo e($legal['ogrn']); ?></b></li><?php endif; ?>
+                        <?php if (!empty($legal['legalAddr'])): ?><li><span>Юридический адрес</span><b><?php echo e($legal['legalAddr']); ?></b></li><?php endif; ?>
                     </ul>
                     <?php endif; ?>
 
