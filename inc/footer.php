@@ -32,9 +32,11 @@ $year = date('Y');
                 <p class="footer__heading">Компания</p>
                 <ul class="footer__list">
                     <li><a href="/kalkulyator/" class="footer__link">Калькулятор доставки</a></li>
+                    <li><a href="/dokumenty/" class="footer__link">Документы и лицензии</a></li>
                     <?php foreach ($standaloneNav as $page): ?>
                     <li><a href="<?php echo e($page['url']); ?>" class="footer__link"><?php echo e($page['title']); ?></a></li>
                     <?php endforeach; ?>
+                    <li><a href="/oferta/" class="footer__link">Публичная оферта</a></li>
                 </ul>
             </nav>
         </div>
