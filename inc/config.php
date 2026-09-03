@@ -61,7 +61,7 @@ $email = 'info@expresslogists.com';
 
 /* Telegram для откликов на вакансии (промо-лендинги найма).
    Укажите username без @ — ссылка соберётся автоматически (https://t.me/username). */
-$telegramUser = 'expresslogist_hr';
+$telegramUser = 'drugccourier';
 
 /* Адрес головного офиса (для schema.org и страницы контактов) */
 $address = [
