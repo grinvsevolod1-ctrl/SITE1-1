@@ -110,7 +110,9 @@ require __DIR__ . '/../inc/header.php';
                     <ul class="req-list">
                         <?php if (!empty($legal['name'])): ?><li><span>Наименование</span><b><?php echo e($legal['name']); ?></b></li><?php endif; ?>
                         <?php if (!empty($legal['inn'])): ?><li><span>ИНН</span><b><?php echo e($legal['inn']); ?></b></li><?php endif; ?>
+                        <?php if (!empty($legal['kpp'])): ?><li><span>КПП</span><b><?php echo e($legal['kpp']); ?></b></li><?php endif; ?>
                         <?php if (!empty($legal['ogrn'])): ?><li><span>ОГРН</span><b><?php echo e($legal['ogrn']); ?></b></li><?php endif; ?>
+                        <?php if (!empty($legal['director'])): ?><li><span>Генеральный директор</span><b><?php echo e($legal['director']); ?></b></li><?php endif; ?>
                         <?php if (!empty($legal['legalAddr'])): ?><li><span>Юридический адрес</span><b><?php echo e($legal['legalAddr']); ?></b></li><?php endif; ?>
                     </ul>
                     <?php endif; ?>
