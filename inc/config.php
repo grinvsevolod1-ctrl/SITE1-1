@@ -17,6 +17,33 @@ declare(strict_types=1);
 define('INC', __DIR__);
 
 /* -------------------------------------------------------------------------
+   Загрузчик секретов (пароли, соли). Секреты НЕ хранятся в git.
+   Приоритет источников:
+     1) переменная окружения (getenv)
+     2) локальный файл inc/secrets.local.php (создаётся на сервере, вне git)
+     3) значение по умолчанию (заглушка)
+   Файл secrets.local.php должен возвращать массив, например:
+     <?php return ['ELG_ANALYTICS_PASSWORD' => '...', 'ELG_ANALYTICS_SALT' => '...'];
+   ------------------------------------------------------------------------- */
+$GLOBALS['__localSecrets'] = is_file(INC . '/secrets.local.php')
+    ? (array) (require INC . '/secrets.local.php')
+    : [];
+if (!function_exists('secret')) {
+    function secret(string $key, string $default = ''): string
+    {
+        $env = getenv($key);
+        if ($env !== false && $env !== '') {
+            return $env;
+        }
+        $local = $GLOBALS['__localSecrets'] ?? [];
+        if (isset($local[$key]) && $local[$key] !== '') {
+            return (string) $local[$key];
+        }
+        return $default;
+    }
+}
+
+/* -------------------------------------------------------------------------
    Основные данные компании
    ------------------------------------------------------------------------- */
 
@@ -87,12 +114,13 @@ $analytics = [
     /* Включить сбор. false — коллектор ничего не пишет. */
     'enabled'  => true,
     /* Логин и пароль для входа в админку /a/panel.php.
-       Сгенерированы автоматически. Хотите — смените на свои. */
-    'user'     => 'admin',
-    'password' => 'lLvIdY8EER1eThPy',
+       Реальные значения берутся из inc/secrets.local.php на сервере (вне git).
+       Значения ниже — только запасные заглушки. */
+    'user'     => secret('ELG_ANALYTICS_USER', 'admin'),
+    'password' => secret('ELG_ANALYTICS_PASSWORD', 'change-me-please'),
     /* Секретная «соль» для хэширования IP (обезличивание по 152-ФЗ).
-       Задана случайной строкой. НЕ меняйте потом — иначе хэши IP «поедут». */
-    'ipSalt'   => 'c603c2cc78f45f3271547a80e29153e9fdff8e5b9a63909da9c45e28df0f25af',
+       Берётся из secrets.local.php. НЕ меняйте потом — иначе хэши IP «поедут». */
+    'ipSalt'   => secret('ELG_ANALYTICS_SALT', 'default-insecure-salt-change-me'),
 ];
 
 /* -------------------------------------------------------------------------
