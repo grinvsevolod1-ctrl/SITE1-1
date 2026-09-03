@@ -29,6 +29,9 @@ $vReq      = $vacancy['requirements'] ?? [];
 $vSteps    = $vacancy['steps']        ?? [];
 $vFields   = $vacancy['fields']       ?? 'driver'; // 'driver' | 'courier'
 $vBadge    = $vacancy['badge']        ?? 'Открыт набор водителей';
+$vTelegram = !empty($vacancy['telegram']); // true → вместо формы показать Telegram-CTA
+$tgUser    = ltrim((string) ($telegramUser ?? ''), '@');
+$tgLink    = $tgUser !== '' ? 'https://t.me/' . $tgUser : '#';
 
 require __DIR__ . '/head.php';
 ?>
@@ -82,6 +85,34 @@ require __DIR__ . '/head.php';
                 </div>
             </div>
 
+            <?php if ($vTelegram): ?>
+            <!-- Telegram-CTA вместо формы -->
+            <div class="tg-card" id="form">
+                <span class="tg-card__icon" aria-hidden="true">
+                    <svg width="44" height="44" viewBox="0 0 48 48" fill="none">
+                        <circle cx="24" cy="24" r="24" fill="#229ED9"/>
+                        <path d="M10.9 23.5l24-9.3c1.1-.4 2.1.3 1.7 2l-4.1 19.3c-.3 1.4-1.1 1.7-2.3 1.1l-6.3-4.7-3 2.9c-.3.3-.6.6-1.3.6l.5-6.5 11.9-10.8c.5-.5-.1-.7-.8-.3l-14.7 9.3-6.4-2c-1.4-.4-1.4-1.4.2-2z" fill="#fff"/>
+                    </svg>
+                </span>
+                <p class="tg-card__title">Напишите нам в Telegram</p>
+                <p class="tg-card__note">Отвечаем быстро, расскажем про заказы, график и выплаты. Отклик — в один клик, без анкет.</p>
+                <a href="<?php echo e($tgLink); ?>" target="_blank" rel="noopener" class="btn btn--tg btn--block" data-track="tg-click">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M9.8 15.6l-.4 4c.5 0 .8-.2 1.1-.5l2.6-2.5 5.4 4c1 .5 1.7.3 1.9-.9l3.5-16.4c.3-1.5-.5-2.1-1.5-1.7L1.2 9.3C-.2 9.9-.2 10.7 1 11l5.5 1.7L20 4.2c.6-.4 1.2-.2.7.2"/></svg>
+                    Написать в Telegram
+                </a>
+                <p class="tg-card__hint">Или позвоните: <a href="tel:<?php echo e($phoneHref); ?>"><?php echo e($phoneDisplay); ?></a></p>
+                <div class="tg-card__badges">
+                    <span class="tg-badge">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 6 9 17l-5-5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        Берём с любым гражданством
+                    </span>
+                    <span class="tg-badge">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 6 9 17l-5-5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        Работаем по всей СНГ
+                    </span>
+                </div>
+            </div>
+            <?php else: ?>
             <!-- Форма отклика (пишет в logs/leads.txt с пометкой вакансии) -->
             <div class="lead-card" id="form">
                 <p class="lead-card__title">Отклик на вакансию</p>
@@ -176,6 +207,7 @@ require __DIR__ . '/head.php';
                     <div class="form-status" role="status" aria-live="polite"></div>
                 </form>
             </div>
+            <?php endif; ?>
         </div>
     </section>
 

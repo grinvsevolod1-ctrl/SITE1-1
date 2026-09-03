@@ -315,7 +315,7 @@ h1, h2, h3, h4 { font-family: var(--font-head); font-weight: 800; line-height: 1
 .cta-band__text p { color: #B8C6D8; margin-top: 10px; }
 .cta-band__actions { position: relative; z-index: 1; display: flex; gap: 14px; flex-wrap: wrap; }
 
-/* ---------- Контент-с��раницы: layout с сайдбаром ---------- */
+/* ---------- Контент-с����раницы: layout с сайдбаром ---------- */
 .layout { display: grid; grid-template-columns: 260px 1fr; gap: 48px; align-items: start; }
 /* Часть страниц (документы, оферта, политика) обёрнута в .layout__main + .layout__aside.
    Раньше эти обёртки не имели правил, из-за чего контент попадал в узкую колонку 260px
@@ -734,6 +734,77 @@ table.data tr:last-child td { border-bottom: none; }
 @media (max-width: 720px) {
     .vacancy-req { padding: 1.5rem; }
     .vacancy-req__list { grid-template-columns: 1fr; gap: .8rem; }
+}
+
+/* Telegram-CTA (вместо формы на промо найма) */
+.tg-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 2.25rem 2rem;
+    text-align: center;
+    box-shadow: 0 24px 60px -32px rgba(16, 32, 64, .35);
+}
+.tg-card__icon {
+    display: inline-flex;
+    margin-bottom: 1rem;
+    filter: drop-shadow(0 10px 22px rgba(34, 158, 217, .4));
+}
+.tg-card__title {
+    font-family: var(--font-head);
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--navy);
+    margin: 0 0 .5rem;
+    line-height: 1.25;
+}
+.tg-card__note {
+    font-size: 1rem;
+    line-height: 1.55;
+    color: var(--steel);
+    margin: 0 auto 1.5rem;
+    max-width: 34ch;
+}
+.btn--tg {
+    background: #229ED9;
+    color: #fff;
+    border-color: transparent;
+}
+.btn--tg:hover { background: #1b87ba; box-shadow: 0 10px 26px rgba(34, 158, 217, .35); }
+.btn--tg svg { flex-shrink: 0; }
+.tg-card__hint {
+    font-size: .95rem;
+    color: var(--steel);
+    margin: 1rem 0 0;
+}
+.tg-card__hint a { color: var(--navy); font-weight: 700; text-decoration: none; }
+.tg-card__hint a:hover { text-decoration: underline; }
+.tg-card__badges {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: .6rem;
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border);
+}
+.tg-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: .4rem;
+    font-family: var(--font-head);
+    font-size: .9rem;
+    font-weight: 700;
+    color: var(--navy);
+    background: var(--mist);
+    border-radius: 999px;
+    padding: .5rem .9rem;
+}
+.tg-badge svg { color: var(--accent); flex-shrink: 0; }
+
+@media (max-width: 720px) {
+    .tg-card { padding: 1.75rem 1.25rem; }
+    .tg-card__title { font-size: 1.3rem; }
 }
 
 /* Уважение к prefers-reduced-motion */

@@ -59,6 +59,10 @@ $phoneHref    = '88005553535';
 
 $email = 'info@expresslogists.com';
 
+/* Telegram для откликов на вакансии (промо-лендинги найма).
+   Укажите username без @ — ссылка соберётся автоматически (https://t.me/username). */
+$telegramUser = 'expresslogist_hr';
+
 /* Адрес головного офиса (для schema.org и страницы контактов) */
 $address = [
     'street'  => 'ул. Намёткина, д. 13, корп. 1',
