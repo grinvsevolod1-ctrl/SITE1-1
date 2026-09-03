@@ -27,6 +27,8 @@ $vIncome   = $vacancy['income']       ?? [];
 $vOffer    = $vacancy['offer']        ?? [];
 $vReq      = $vacancy['requirements'] ?? [];
 $vSteps    = $vacancy['steps']        ?? [];
+$vFields   = $vacancy['fields']       ?? 'driver'; // 'driver' | 'courier'
+$vBadge    = $vacancy['badge']        ?? 'Открыт набор водителей';
 
 require __DIR__ . '/head.php';
 ?>
@@ -54,7 +56,7 @@ require __DIR__ . '/head.php';
     <section class="promo-hero promo-hero--vacancy">
         <div class="container promo-hero__grid">
             <div class="promo-hero__text">
-                <span class="promo-badge">Открыт набор водителей</span>
+                <span class="promo-badge"><?php echo e($vBadge); ?></span>
                 <h1 class="promo-hero__title"><?php echo e($vacancy['h1'] ?? 'Работа водителем в транспортной компании'); ?></h1>
                 <?php if (!empty($vacancy['sub'])): ?>
                 <p class="promo-hero__sub"><?php echo e($vacancy['sub']); ?></p>
@@ -104,6 +106,31 @@ require __DIR__ . '/head.php';
                         <label class="field__label" for="f-city">Город</label>
                         <input class="input" type="text" id="f-city" name="city" placeholder="Где вам удобно работать">
                     </div>
+                    <?php if ($vFields === 'courier'): ?>
+                    <div class="field">
+                        <div class="field__row">
+                            <div>
+                                <label class="field__label" for="f-vehicle">Как удобно работать</label>
+                                <select class="select" id="f-vehicle" name="vehicle">
+                                    <option value="">Выберите</option>
+                                    <option value="Пеший курьер">Пеший курьер</option>
+                                    <option value="Вело / самокат">Вело / самокат</option>
+                                    <option value="Авто-курьер">Авто-курьер</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="field__label" for="f-experience">Занятость</label>
+                                <select class="select" id="f-experience" name="experience">
+                                    <option value="">Выберите</option>
+                                    <option value="Полный день">Полный день</option>
+                                    <option value="Подработка">Подработка</option>
+                                    <option value="По выходным">По выходным</option>
+                                    <option value="Свободный график">Свободный график</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <?php else: ?>
                     <div class="field">
                         <div class="field__row">
                             <div>
@@ -139,6 +166,7 @@ require __DIR__ . '/head.php';
                             <option value="Без своего авто — на автопарк компании">Без своего авто — на автопарк компании</option>
                         </select>
                     </div>
+                    <?php endif; ?>
                     <label class="consent">
                         <input type="checkbox" name="agree" value="1" required>
                         <span>Я даю согласие на обработку персональных данных в соответствии с Федеральным законом №&nbsp;152-ФЗ и принимаю <a href="/politika-konfidencialnosti/">политику конфиденциальности</a></span>
